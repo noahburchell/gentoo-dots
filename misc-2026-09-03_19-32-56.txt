@@ -1,0 +1,2334 @@
+# Misc system snapshot
+# host      : lychee
+# taken     : 2026-09-03T19:32:59+09:30
+# kernel    : 7.1.6-lychee
+# script    : /home/nburch/Scripts/snapshot-system.sh
+
+
+════════════════════════════════════════════════════════════════════
+  SERVICES (OpenRC)
+════════════════════════════════════════════════════════════════════
+
+
+──── $ rc-update show -v
+               agetty |                                        
+               binfmt | boot                                   
+             bootlogd |                                        
+             bootmisc | boot                                   
+        busybox-crond |                                        
+         busybox-ntpd |                                        
+     busybox-watchdog |                                        
+              cgroups |                                 sysinit
+              chronyd |      default                           
+          consolefont |                                        
+             cpupower |      default                           
+               cronie |      default                           
+                cupsd |                                        
+                 dbus |      default                           
+                devfs |                                 sysinit
+        device-mapper |                                        
+               dhcpcd |      default                           
+      display-manager |      default                           
+ display-manager-setup |                                        
+              dmcrypt |                                        
+                dmesg |                                 sysinit
+              elogind | boot                                   
+           fancontrol |                                        
+                 fsck | boot                                   
+                 fuse |                                        
+           git-daemon |                                        
+             hostname | boot                                   
+              hwclock | boot                                   
+            ip6tables |                                        
+             iptables |                                        
+              keymaps | boot                                   
+            killprocs |                        shutdown        
+    kmod-static-nodes |                                 sysinit
+           lm_sensors |                                        
+                local |      default nonetwork                 
+           localmount | boot                                   
+             loopback | boot                                   
+             minidlna |                                        
+              modules | boot                                   
+        modules-mount |                                 sysinit
+             mount-ro |                        shutdown        
+                 mtab | boot                                   
+           net-online |                                        
+             netmount |                                        
+              numlock |                                        
+              osclock |                                        
+              pciparm |                                        
+ power-profiles-daemon |                                        
+               procfs | boot                                   
+           pydoc-3.14 |                                        
+                 root | boot                                   
+               rsyncd |                                        
+             runsvdir |                                        
+            s6-svscan |                                        
+         save-keymaps | boot                                   
+    save-termencoding | boot                                   
+            savecache |                        shutdown        
+              seedrng | boot                                   
+                 sshd |                                        
+                 swap | boot                                   
+              swclock |                                        
+   switcheroo-control |                                        
+               sysctl | boot                                   
+                sysfs |                                 sysinit
+             sysklogd |      default                           
+ systemd-tmpfiles-setup | boot                                   
+ systemd-tmpfiles-setup-dev |                                 sysinit
+         termencoding | boot                                   
+                 udev |                                 sysinit
+          udev-settle |                                        
+         udev-trigger |                                 sysinit
+                 user |                                        
+          user.nburch |                                        
+            user.noah |                                        
+                  xdm |                                        
+
+──── $ rc-status -a
+Runlevel: sysinit
+ devfs                                                             [  started  ]
+ kmod-static-nodes                                                 [  started  ]
+ systemd-tmpfiles-setup-dev                                        [  started  ]
+ sysfs                                                             [  started  ]
+ udev                                                              [  started  ]
+ modules-mount                                                     [  started  ]
+ dmesg                                                             [  started  ]
+ udev-trigger                                                      [  started  ]
+ cgroups                                                           [  started  ]
+Runlevel: boot
+ hwclock                                                           [  started  ]
+ modules                                                           [  started  ]
+ fsck                                                              [  started  ]
+ root                                                              [  started  ]
+ mtab                                                              [  started  ]
+ swap                                                              [  started  ]
+ localmount                                                        [  started  ]
+ systemd-tmpfiles-setup                                            [  started  ]
+ sysctl                                                            [  started  ]
+ bootmisc                                                          [  started  ]
+ hostname                                                          [  started  ]
+ elogind                                                           [  started  ]
+ termencoding                                                      [  started  ]
+ seedrng                                                           [  started  ]
+ save-termencoding                                                 [  started  ]
+ keymaps                                                           [  started  ]
+ save-keymaps                                                      [  started  ]
+ procfs                                                            [  started  ]
+ binfmt                                                            [  started  ]
+ loopback                                                          [  started  ]
+Runlevel: default
+ dbus                                                              [  started  ]
+ chronyd                                                           [  started  ]
+ sysklogd                                                          [  started  ]
+ cronie                                                            [  started  ]
+ display-manager                                                   [  started  ]
+ cpupower                                                          [  started  ]
+ dhcpcd                                                            [  started  ]
+ local                                                             [  started  ]
+Runlevel: nonetwork
+ local                                                             [  started  ]
+Runlevel: shutdown
+ killprocs                                                         [  stopped  ]
+ savecache                                                         [  stopped  ]
+ mount-ro                                                          [  stopped  ]
+Dynamic Runlevel: hotplugged
+Dynamic Runlevel: needed/wanted
+ display-manager-setup                                             [  started  ]
+Dynamic Runlevel: manual
+
+
+════════════════════════════════════════════════════════════════════
+  STORAGE LAYOUT
+════════════════════════════════════════════════════════════════════
+
+
+──── $ lsblk -f
+NAME        FSTYPE  FSVER            LABEL                      UUID                                 FSAVAIL FSUSE% MOUNTPOINTS
+sda                                                                                                                 
+├─sda1      vfat    FAT32                                       99D2-E6C5                                           
+└─sda2      ext4    1.0              Nix                        404637ea-bfd4-4153-a56e-6abacea252e6  220.8G     0% /run/media/noah/Nix
+sdb         iso9660 Joliet Extension nixos-minimal-26.05-x86_64 1980-01-01-00-00-00-00                              
+├─sdb1      iso9660 Joliet Extension nixos-minimal-26.05-x86_64 1980-01-01-00-00-00-00                              
+└─sdb2      vfat    FAT12            EFIBOOT                    1234-5678                                           
+nvme0n1                                                                                                             
+├─nvme0n1p1 vfat    FAT32                                       76B3-9106                                 2G     2% /boot
+└─nvme0n1p2 btrfs                    gentoo                     c1765e1d-0265-4699-94ce-31099ee30e29  473.9G    74% /swap
+                                                                                                                    /var/tmp/portage
+                                                                                                                    /home
+                                                                                                                    /usr/lib/modules
+                                                                                                                    /
+
+──── $ blkid
+/dev/nvme0n1p1: UUID="76B3-9106" BLOCK_SIZE="512" TYPE="vfat" PARTUUID="c02425ec-ff14-4dc0-8999-5b799f8f38fe"
+/dev/nvme0n1p2: LABEL="gentoo" UUID="c1765e1d-0265-4699-94ce-31099ee30e29" UUID_SUB="7f119889-5ee6-4761-a2b3-fb0cab1cb789" BLOCK_SIZE="4096" TYPE="btrfs" PARTUUID="168ebf8f-0d2d-4ca0-be3a-8216307cb6ba"
+
+──── $ findmnt --real
+TARGET                SOURCE                           FSTYPE OPTIONS
+/                     /dev/nvme0n1p2[/@]               btrfs  rw,noatime,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=494,subvol=/@
+├─/run/media/noah/Nix /dev/sda2                        ext4   rw,nosuid,nodev,relatime,errors=remount-ro
+├─/usr/lib/modules    /dev/nvme0n1p2[/@modules]        btrfs  rw,noatime,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=504,subvol=/@modules
+├─/home               /dev/nvme0n1p2[/@home]           btrfs  rw,noatime,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=257,subvol=/@home
+├─/var/tmp/portage    /dev/nvme0n1p2[/@gentoo-portage] btrfs  rw,noatime,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=483,subvol=/@gentoo-portage
+├─/swap               /dev/nvme0n1p2[/@swap]           btrfs  rw,noatime,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=491,subvol=/@swap
+└─/boot               /dev/nvme0n1p1                   vfat   rw,noatime,fmask=0133,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,utf8,errors=remount-ro
+
+──── $ btrfs subvolume list / (as doas)
+ID 257 gen 70193 top level 5 path @home
+ID 483 gen 69855 top level 5 path @gentoo-portage
+ID 491 gen 50152 top level 5 path @swap
+ID 494 gen 70193 top level 5 path @
+ID 495 gen 69673 top level 494 path srv
+ID 501 gen 55805 top level 5 path @ignite
+ID 504 gen 62824 top level 5 path @modules
+
+──── $ btrfs filesystem usage / (as doas)
+Overall:
+    Device size:		   1.82TiB
+    Device allocated:		   1.41TiB
+    Device unallocated:		 419.95GiB
+    Device missing:		     0.00B
+    Device slack:		   3.50KiB
+    Used:			   1.35TiB
+    Free (estimated):		 473.95GiB	(min: 263.97GiB)
+    Free (statfs, df):		 473.94GiB
+    Data ratio:			      1.00
+    Metadata ratio:		      2.00
+    Global reserve:		 512.00MiB	(used: 0.00B)
+    Multiple profiles:		        no
+
+Data,single: Size:1.40TiB, Used:1.34TiB (96.23%)
+   /dev/nvme0n1p2	   1.40TiB
+
+Metadata,DUP: Size:5.00GiB, Used:3.72GiB (74.34%)
+   /dev/nvme0n1p2	  10.00GiB
+
+System,DUP: Size:32.00MiB, Used:192.00KiB (0.59%)
+   /dev/nvme0n1p2	  64.00MiB
+
+Unallocated:
+   /dev/nvme0n1p2	 419.95GiB
+
+──── $ swapon --show
+NAME           TYPE SIZE USED PRIO
+/swap/swapfile file  16G   0B   -1
+
+──── $ sfdisk -d /dev/nvme0n1 (as doas)
+label: gpt
+label-id: 10EB2DC7-192B-4538-A851-64E70E219D2B
+device: /dev/nvme0n1
+unit: sectors
+first-lba: 34
+last-lba: 3907029134
+sector-size: 512
+
+/dev/nvme0n1p1 : start=        2048, size=     4194304, type=C12A7328-F81F-11D2-BA4B-00A0C93EC93B, uuid=C02425EC-FF14-4DC0-8999-5B799F8F38FE
+/dev/nvme0n1p2 : start=     4196352, size=  3902832783, type=0FC63DAF-8483-4772-8E79-3D69D8477DE4, uuid=168EBF8F-0D2D-4CA0-BE3A-8216307CB6BA
+
+──── $ sfdisk -d /dev/sda (as doas)
+label: gpt
+label-id: C15D43A7-9C6B-11F1-BA2A-345A60BAF24B
+device: /dev/sda
+unit: sectors
+first-lba: 40
+last-lba: 500118151
+sector-size: 512
+
+/dev/sda1 : start=        2048, size=     2097152, type=C12A7328-F81F-11D2-BA4B-00A0C93EC93B, uuid=5C48B86B-C477-48F6-9E5E-540B5A43B4DA
+/dev/sda2 : start=     2099200, size=   498018304, type=0FC63DAF-8483-4772-8E79-3D69D8477DE4, uuid=C98871A8-E81B-4D72-9B0B-9FE63886169C
+
+──── $ sfdisk -d /dev/sdb (as doas)
+label: dos
+label-id: 0x9fb6382f
+device: /dev/sdb
+unit: sectors
+sector-size: 512
+
+/dev/sdb1 : start=           0, size=     3335808, type=0, bootable
+/dev/sdb2 : start=         284, size=        6144, type=ef
+
+──── $ df -h
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/nvme0n1p2  1.9T  1.4T  474G  75% /
+devtmpfs         10M     0   10M   0% /dev
+tmpfs           6.2G  1.5M  6.2G   1% /run
+shm              16G   18M   16G   1% /dev/shm
+/dev/nvme0n1p2  1.9T  1.4T  474G  75% /usr/lib/modules
+/dev/nvme0n1p2  1.9T  1.4T  474G  75% /home
+/dev/nvme0n1p2  1.9T  1.4T  474G  75% /var/tmp/portage
+/dev/nvme0n1p2  1.9T  1.4T  474G  75% /swap
+/dev/nvme0n1p1  2.0G   47M  2.0G   3% /boot
+tmpfs           3.1G   80K  3.1G   1% /run/user/1000
+/dev/sda2       233G   36K  221G   1% /run/media/noah/Nix
+
+
+════════════════════════════════════════════════════════════════════
+  HARDWARE
+════════════════════════════════════════════════════════════════════
+
+
+──── $ lspci -nn
+00:00.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge Root Complex [1022:14d8]
+00:00.2 IOMMU [0806]: Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge IOMMU [1022:14d9]
+00:01.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge Dummy Host Bridge [1022:14da]
+00:01.1 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge GPP Bridge [1022:14db]
+00:01.2 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge GPP Bridge [1022:14db]
+00:02.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge Dummy Host Bridge [1022:14da]
+00:02.1 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge GPP Bridge [1022:14db]
+00:03.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge Dummy Host Bridge [1022:14da]
+00:04.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge Dummy Host Bridge [1022:14da]
+00:08.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge Dummy Host Bridge [1022:14da]
+00:08.1 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge Internal GPP Bridge to Bus [C:A] [1022:14dd]
+00:08.3 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge Internal GPP Bridge to Bus [C:A] [1022:14dd]
+00:14.0 SMBus [0c05]: Advanced Micro Devices, Inc. [AMD] FCH SMBus Controller [1022:790b] (rev 71)
+00:14.3 ISA bridge [0601]: Advanced Micro Devices, Inc. [AMD] FCH LPC Bridge [1022:790e] (rev 51)
+00:18.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge Data Fabric; Function 0 [1022:14e0]
+00:18.1 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge Data Fabric; Function 1 [1022:14e1]
+00:18.2 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge Data Fabric; Function 2 [1022:14e2]
+00:18.3 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge Data Fabric; Function 3 [1022:14e3]
+00:18.4 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge Data Fabric; Function 4 [1022:14e4]
+00:18.5 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge Data Fabric; Function 5 [1022:14e5]
+00:18.6 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge Data Fabric; Function 6 [1022:14e6]
+00:18.7 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge Data Fabric; Function 7 [1022:14e7]
+01:00.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD/ATI] Navi 10 XL Upstream Port of PCI Express Switch [1002:1478] (rev 24)
+02:00.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD/ATI] Navi 10 XL Downstream Port of PCI Express Switch [1002:1479] (rev 24)
+03:00.0 VGA compatible controller [0300]: Advanced Micro Devices, Inc. [AMD/ATI] Navi 48 [Radeon RX 9070/9070 XT/9070 GRE] [1002:7550] (rev c0)
+03:00.1 Audio device [0403]: Advanced Micro Devices, Inc. [AMD/ATI] Navi 48 HDMI/DP Audio Controller [1002:ab40]
+04:00.0 Non-Volatile memory controller [0108]: Samsung Electronics Co Ltd NVMe SSD Controller SM981/PM981/PM983 [144d:a808]
+05:00.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Upstream Port [1022:43f4] (rev 01)
+06:00.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+06:01.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+06:02.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+06:04.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+06:05.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+06:06.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+06:07.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+06:08.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+06:09.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+06:0a.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+06:0b.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+06:0c.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+06:0d.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+08:00.0 Ethernet controller [0200]: Realtek Semiconductor Co., Ltd. RTL8125 2.5GbE Controller [10ec:8125] (rev 05)
+12:00.0 USB controller [0c03]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset USB 3.2 Controller [1022:43f7] (rev 01)
+13:00.0 SATA controller [0106]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset SATA Controller [1022:43f6] (rev 01)
+14:00.0 Non-Essential Instrumentation [1300]: Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge PCIe Dummy Function [1022:14de] (rev c6)
+14:00.2 Encryption controller [1080]: Advanced Micro Devices, Inc. [AMD] Family 19h PSP/CCP [1022:1649]
+14:00.3 USB controller [0c03]: Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge USB 3.1 xHCI [1022:15b6]
+14:00.4 USB controller [0c03]: Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge USB 3.1 xHCI [1022:15b7]
+15:00.0 USB controller [0c03]: Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge USB 2.0 xHCI [1022:15b8]
+
+──── $ lsusb
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 001 Device 002: ID 3434:1210 Keychron Keychron Q1 Ultra 8K
+Bus 001 Device 003: ID 13fe:4300 Phison Electronics Corp. USB DISK 2.0
+Bus 001 Device 004: ID 174c:2074 ASMedia Technology Inc. ASM1074 High-Speed hub
+Bus 001 Device 005: ID 0e8d:0616 MediaTek Inc. Wireless_Device
+Bus 001 Device 006: ID 2972:0120 FiiO Electronics Technology FIIO K13 R2R
+Bus 001 Device 007: ID 0db0:0076 Micro Star International MYSTIC LIGHT 
+Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+Bus 002 Device 002: ID 174c:3074 ASMedia Technology Inc. ASM1074 SuperSpeed hub
+Bus 003 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 003 Device 002: ID 046d:c54d Logitech, Inc. USB Receiver
+Bus 004 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+Bus 005 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 005 Device 002: ID 8089:0009 SayoDevice SayoDevice O3C
+Bus 006 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+Bus 007 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+
+──── $ free -h
+               total        used        free      shared  buff/cache   available
+Mem:            30Gi       4.0Gi        11Gi       195Mi        16Gi        26Gi
+Swap:           15Gi          0B        15Gi
+
+──── $ lscpu
+Architecture:                            x86_64
+CPU op-mode(s):                          32-bit, 64-bit
+Address sizes:                           48 bits physical, 48 bits virtual
+Byte Order:                              Little Endian
+CPU(s):                                  12
+On-line CPU(s) list:                     0-11
+Vendor ID:                               AuthenticAMD
+Model name:                              AMD Ryzen 5 9600X 6-Core Processor
+CPU family:                              26
+Model:                                   68
+Thread(s) per core:                      2
+Core(s) per socket:                      6
+Socket(s):                               1
+Stepping:                                0
+Microcode version:                       0xb404038
+Frequency boost:                         enabled
+CPU(s) scaling MHz:                      60%
+CPU max MHz:                             5486.4409
+CPU min MHz:                             627.9670
+BogoMIPS:                                7799.98
+Flags:                                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good amd_lbr_v2 nopl xtopology nonstop_tsc cpuid extd_apicid aperfmperf rapl pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs skinit wdt tce topoext perfctr_core perfctr_nb bpext perfctr_llc mwaitx cpuid_fault cpb cat_l3 cdp_l3 hw_pstate ssbd mba perfmon_v2 ibrs ibpb stibp ibrs_enhanced vmmcall fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid cqm rdt_a avx512f avx512dq rdseed adx smap avx512ifma clflushopt clwb avx512cd sha_ni avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local user_shstk avx_vnni avx512_bf16 clzero irperf xsaveerptr rdpru wbnoinvd cppc arat npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold avic v_vmsave_vmload vgif x2avic v_spec_ctrl vnmi avx512vbmi umip pku ospke avx512_vbmi2 gfni vaes vpclmulqdq avx512_vnni avx512_bitalg avx512_vpopcntdq rdpid bus_lock_detect movdiri movdir64b overflow_recov succor smca fsrm avx512_vp2intersect flush_l1d amd_lbr_pmc_freeze
+Virtualization:                          AMD-V
+L1d cache:                               288 KiB (6 instances)
+L1i cache:                               192 KiB (6 instances)
+L2 cache:                                6 MiB (6 instances)
+L3 cache:                                32 MiB (1 instance)
+Vulnerability Gather data sampling:      Not affected
+Vulnerability Ghostwrite:                Not affected
+Vulnerability Indirect target selection: Not affected
+Vulnerability Itlb multihit:             Not affected
+Vulnerability L1tf:                      Not affected
+Vulnerability Mds:                       Not affected
+Vulnerability Meltdown:                  Not affected
+Vulnerability Mmio stale data:           Not affected
+Vulnerability Old microcode:             Not affected
+Vulnerability Reg file data sampling:    Not affected
+Vulnerability Retbleed:                  Not affected
+Vulnerability Spec rstack overflow:      Vulnerable
+Vulnerability Spec store bypass:         Vulnerable
+Vulnerability Spectre v1:                Vulnerable: __user pointer sanitization and usercopy barriers only; no swapgs barriers
+Vulnerability Spectre v2:                Vulnerable; IBPB: disabled; STIBP: disabled; PBRSB-eIBRS: Not affected; BHI: Not affected
+Vulnerability Srbds:                     Not affected
+Vulnerability Tsa:                       Not affected
+Vulnerability Tsx async abort:           Not affected
+Vulnerability Vmscape:                   Vulnerable
+
+
+════════════════════════════════════════════════════════════════════
+  NETWORK
+════════════════════════════════════════════════════════════════════
+
+
+──── $ ip -brief addr
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+enp8s0           UP             10.10.10.10/24 fe80::50e9:4de2:2249:71d0/64 
+
+──── $ ip route
+default via 10.10.10.1 dev enp8s0 src 10.10.10.10 metric 1002 
+10.10.10.0/24 dev enp8s0 proto dhcp scope link src 10.10.10.10 metric 1002 
+
+──── $ nmcli -f NAME,UUID,TYPE,DEVICE con show
+    [nmcli not installed]
+
+
+════════════════════════════════════════════════════════════════════
+  CRON
+════════════════════════════════════════════════════════════════════
+
+
+──── $ crontab -l
+'/var/spool/cron/crontabs' is not a directory, bailing out.
+    [exit 1]
+
+──── /etc/cron.d/0hourly ─────────────────────────────────────────
+# Run the hourly jobs
+SHELL=/bin/bash
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+MAILTO=root
+01 * * * * root run-parts /etc/cron.hourly
+
+──── /etc/cron.d/dailyjobs ───────────────────────────────────────
+# Run the daily, weekly, and monthly jobs if cronie-anacron is not installed
+SHELL=/bin/bash
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+MAILTO=root
+
+# run-parts
+02 4 * * * root [ ! -f /etc/cron.hourly/0anacron ] && run-parts /etc/cron.daily
+22 4 * * 0 root [ ! -f /etc/cron.hourly/0anacron ] && run-parts /etc/cron.weekly
+42 4 1 * * root [ ! -f /etc/cron.hourly/0anacron ] && run-parts /etc/cron.monthly
+
+
+════════════════════════════════════════════════════════════════════
+  PRIVILEGED CONFIG
+════════════════════════════════════════════════════════════════════
+
+
+──── /etc/doas.conf [priv] ──────────────────────────────────────────────
+permit persist :wheel
+
+
+════════════════════════════════════════════════════════════════════
+  CONFIG FILES
+════════════════════════════════════════════════════════════════════
+
+
+──── /etc/fstab ──────────────────────────────────────────────────
+UUID=c1765e1d-0265-4699-94ce-31099ee30e29  /                 btrfs  noatime,compress=zstd:3,ssd,discard=async,space_cache=v2,subvol=/@          0 0
+UUID=c1765e1d-0265-4699-94ce-31099ee30e29  /home             btrfs  noatime,compress=zstd:3,ssd,discard=async,space_cache=v2,subvol=/@home            0 0
+UUID=c1765e1d-0265-4699-94ce-31099ee30e29  /var/tmp/portage  btrfs  noatime,nodatacow,ssd,discard=async,space_cache=v2,subvol=/@gentoo-portage         0 0
+UUID=c1765e1d-0265-4699-94ce-31099ee30e29  /swap             btrfs  noatime,nodatacow,ssd,discard=async,space_cache=v2,subvol=/@swap                   0 0
+#/swap/swapfile                             none              swap   defaults                                                                           0 0
+UUID=76B3-9106                             /boot             vfat   noatime,fmask=0133,dmask=0022                                                  0 2
+UUID=c1765e1d-0265-4699-94ce-31099ee30e29  /usr/lib/modules  btrfs  noauto,subvol=@modules,noatime,compress=zstd  0 0
+
+──── /etc/locale.gen ─────────────────────────────────────────────
+# This file defines which locales to incorporate into the glibc locale archive.
+# See the locale.gen(5) and locale-gen(8) man pages for more details.
+
+en_AU.UTF-8 UTF-8
+# aa_DJ            # Afar (Djibouti)
+# aa_ER            # Afar (Eritrea)
+# aa_ET            # Afar (Ethiopia)
+# af_ZA            # Afrikaans (South Africa)
+# agr_PE           # Aguaruna (Peru)
+# ak_GH            # Akan (Ghana)
+# am_ET            # Amharic (Ethiopia)
+# an_ES            # Aragonese (Spain)
+# anp_IN           # Angika (India)
+# ar_AE            # Arabic (United Arab Emirates)
+# ar_BH            # Arabic (Bahrain)
+# ar_DZ            # Arabic (Algeria)
+# ar_EG            # Arabic (Egypt)
+# ar_IN            # Arabic (India)
+# ar_IQ            # Arabic (Iraq)
+# ar_JO            # Arabic (Jordan)
+# ar_KW            # Arabic (Kuwait)
+# ar_LB            # Arabic (Lebanon)
+# ar_LY            # Arabic (Libya)
+# ar_MA            # Arabic (Morocco)
+# ar_OM            # Arabic (Oman)
+# ar_QA            # Arabic (Qatar)
+# ar_SA            # Arabic (Saudi Arabia)
+# ar_SD            # Arabic (Sudan)
+# ar_SS            # Arabic (South Sudan)
+# ar_SY            # Arabic (Syria)
+# ar_TN            # Arabic (Tunisia)
+# ar_YE            # Arabic (Yemen)
+# ayc_PE           # Aymara (Peru)
+# az_AZ            # Azerbaijani (Azerbaijan)
+# az_IR            # South Azerbaijani (Iran)
+# as_IN            # Assamese (India)
+# ast_ES           # Asturian (Spain)
+# be_BY            # Belarusian (Belarus)
+# be_BY@latin      # Belarusian (Belarus)
+# bem_ZM           # Bemba (Zambia)
+# ber_DZ           # Berber (Algeria)
+# ber_MA           # Berber (Morocco)
+# bg_BG            # Bulgarian (Bulgaria)
+# bhb_IN           # Bhili (India)
+# bho_IN           # Bhojpuri (India)
+# bho_NP           # Bhojpuri (Nepal)
+# bi_VU            # Bislama (Vanuatu)
+# bn_BD            # Bangla (Bangladesh)
+# bn_IN            # Bangla (India)
+# bo_CN            # Tibetan (China)
+# bo_IN            # Tibetan (India)
+# br_FR            # Breton (France)
+# brx_IN           # Bodo (India)
+# bs_BA            # Bosnian (Bosnia & Herzegovina)
+# byn_ER           # Blin (Eritrea)
+# ca_AD            # Catalan (Andorra)
+# ca_ES            # Catalan (Spain)
+# ca_ES@valencia   # Catalan (Spain)
+# ca_FR            # Catalan (France)
+# ca_IT            # Catalan (Italy)
+# ce_RU            # Chechen (Russia)
+# chr_US           # Cherokee (United States)
+# ckb_IQ           # Central Kurdish (Iraq)
+# cmn_TW           # Mandarin Chinese (Taiwan)
+# crh_RU           # Crimean Tatar (Russia)
+# crh_UA           # Crimean Tatar (Ukraine)
+# cs_CZ            # Czech (Czech Republic)
+# csb_PL           # Kashubian (Poland)
+# cv_RU            # Chuvash (Russia)
+# cy_GB            # Welsh (United Kingdom)
+# da_DK            # Danish (Denmark)
+# de_AT            # Austrian German (Austria)
+# de_BE            # German (Belgium)
+# de_CH            # Swiss High German (Switzerland)
+# de_DE            # German (Germany)
+# de_IT            # German (Italy)
+# de_LI            # German (Liechtenstein)
+# de_LU            # German (Luxembourg)
+# doi_IN           # Dogri (India)
+# dsb_DE           # Lower Sorbian (Germany)
+# dv_MV            # Divehi (Maldives)
+# dz_BT            # Dzongkha (Bhutan)
+# el_GR            # Greek (Greece)
+# el_CY            # Greek (Cyprus)
+# en_AG            # English (Antigua & Barbuda)
+# en_AU            # Australian English (Australia)
+# en_BW            # English (Botswana)
+# en_CA            # Canadian English (Canada)
+# en_DK            # English (Denmark)
+# en_GB            # British English (United Kingdom)
+# en_HK            # English (Hong Kong SAR China)
+# en_IE            # English (Ireland)
+# en_IL            # English (Israel)
+# en_IN            # English (India)
+# en_NG            # English (Nigeria)
+# en_NZ            # English (New Zealand)
+# en_PH            # English (Philippines)
+# en_SC            # English (Seychelles)
+# en_SG            # English (Singapore)
+# en_US            # American English (United States)
+# en_ZA            # English (South Africa)
+# en_ZM            # English (Zambia)
+# en_ZW            # English (Zimbabwe)
+# eo               # Esperanto
+# es_AR            # Spanish (Argentina)
+# es_BO            # Spanish (Bolivia)
+# es_CL            # Spanish (Chile)
+# es_CO            # Spanish (Colombia)
+# es_CR            # Spanish (Costa Rica)
+# es_CU            # Spanish (Cuba)
+# es_DO            # Spanish (Dominican Republic)
+# es_EC            # Spanish (Ecuador)
+# es_ES            # European Spanish (Spain)
+# es_GT            # Spanish (Guatemala)
+# es_HN            # Spanish (Honduras)
+# es_MX            # Mexican Spanish (Mexico)
+# es_NI            # Spanish (Nicaragua)
+# es_PA            # Spanish (Panama)
+# es_PE            # Spanish (Peru)
+# es_PR            # Spanish (Puerto Rico)
+# es_PY            # Spanish (Paraguay)
+# es_SV            # Spanish (El Salvador)
+# es_US            # Spanish (United States)
+# es_UY            # Spanish (Uruguay)
+# es_VE            # Spanish (Venezuela)
+# et_EE            # Estonian (Estonia)
+# eu_ES            # Basque (Spain)
+# fa_IR            # Persian (Iran)
+# ff_SN            # Fulah (Senegal)
+# fi_FI            # Finnish (Finland)
+# fil_PH           # Filipino (Philippines)
+# fo_FO            # Faroese (Faroe Islands)
+# fr_BE            # French (Belgium)
+# fr_CA            # Canadian French (Canada)
+# fr_CH            # Swiss French (Switzerland)
+# fr_FR            # French (France)
+# fr_LU            # French (Luxembourg)
+# fur_IT           # Friulian (Italy)
+# fy_NL            # Western Frisian (Netherlands)
+# fy_DE            # Western Frisian (Germany)
+# ga_IE            # Irish (Ireland)
+# gbm_IN           # Garhwali (India)
+# gd_GB            # Scottish Gaelic (United Kingdom)
+# gez_ER           # Geez (Eritrea)
+# gez_ER@abegede   # Geez (Eritrea)
+# gez_ET           # Geez (Ethiopia)
+# gez_ET@abegede   # Geez (Ethiopia)
+# gl_ES            # Galician (Spain)
+# gu_IN            # Gujarati (India)
+# gv_GB            # Manx (United Kingdom)
+# ha_NG            # Hausa (Nigeria)
+# hak_TW           # Hakka Chinese (Taiwan)
+# he_IL            # Hebrew (Israel)
+# hi_IN            # Hindi (India)
+# hif_FJ           # Fiji Hindi (Fiji)
+# hne_IN           # Chhattisgarhi (India)
+# hr_HR            # Croatian (Croatia)
+# hsb_DE           # Upper Sorbian (Germany)
+# ht_HT            # Haitian Creole (Haiti)
+# hu_HU            # Hungarian (Hungary)
+# hy_AM            # Armenian (Armenia)
+# ia_FR            # Interlingua (France)
+# id_ID            # Indonesian (Indonesia)
+# ig_NG            # Igbo (Nigeria)
+# ik_CA            # Inupiaq (Canada)
+# is_IS            # Icelandic (Iceland)
+# it_CH            # Italian (Switzerland)
+# it_IT            # Italian (Italy)
+# iu_CA            # Inuktitut (Canada)
+# ja_JP            # Japanese (Japan)
+# ka_GE            # Georgian (Georgia)
+# kab_DZ           # Kabyle (Algeria)
+# kk_KZ            # Kazakh (Kazakhstan)
+# kl_GL            # Kalaallisut (Greenland)
+# km_KH            # Khmer (Cambodia)
+# kn_IN            # Kannada (India)
+# ko_KR            # Korean (South Korea)
+# kok_IN           # Konkani (India)
+# ks_IN            # Kashmiri (India)
+# ks_IN@devanagari # Kashmiri (India)
+# ku_TR            # Kurdish (Turkey)
+# kv_RU            # Komi (Russia)
+# kw_GB            # Cornish (United Kingdom)
+# ky_KG            # Kyrgyz (Kyrgyzstan)
+# lb_LU            # Luxembourgish (Luxembourg)
+# lg_UG            # Ganda (Uganda)
+# li_BE            # Limburgish (Belgium)
+# li_NL            # Limburgish (Netherlands)
+# lij_IT           # Ligurian (Italy)
+# ln_CD            # Lingala (Democratic Republic of the Congo)
+# lo_LA            # Lao (Laos)
+# lt_LT            # Lithuanian (Lithuania)
+# ltg_LV           # Latgalian (Latvia)
+# lv_LV            # Latvian (Latvia)
+# lzh_TW           # Literary Chinese (Taiwan)
+# mag_IN           # Magahi (India)
+# mai_IN           # Maithili (India)
+# mai_NP           # Maithili (Nepal)
+# mdf_RU           # Moksha (Russia)
+# mfe_MU           # Morisyen (Mauritius)
+# mg_MG            # Malagasy (Madagascar)
+# mhr_RU           # Meadow Mari (Russia)
+# mi_NZ            # Maori (New Zealand)
+# miq_NI           # Miskito (Nicaragua)
+# mjw_IN           # Karbi (India)
+# mk_MK            # Macedonian (Macedonia)
+# ml_IN            # Malayalam (India)
+# mn_MN            # Mongolian (Mongolia)
+# mni_IN           # Manipuri (India)
+# mnw_MM           # Mon (Myanmar/Burma)
+# mr_IN            # Marathi (India)
+# ms_MY            # Malay (Malaysia)
+# mt_MT            # Maltese (Malta)
+# my_MM            # Burmese (Myanmar/Burma)
+# nan_TW           # Min Nan Chinese (Taiwan)
+# nan_TW@latin     # Min Nan Chinese (Taiwan)
+# nb_NO            # Norwegian Bokmal (Norway)
+# nds_DE           # Low German (Germany)
+# nds_NL           # Low Saxon (Netherlands)
+# ne_NP            # Nepali (Nepal)
+# nhn_MX           # Central Nahuatl (Mexico)
+# niu_NU           # Niuean (Niue)
+# niu_NZ           # Niuean (New Zealand)
+# nl_AW            # Dutch (Aruba)
+# nl_BE            # Flemish (Belgium)
+# nl_NL            # Dutch (Netherlands)
+# nn_NO            # Norwegian Nynorsk (Norway)
+# nr_ZA            # South Ndebele (South Africa)
+# nso_ZA           # Northern Sotho (South Africa)
+# oc_FR            # Occitan (France)
+# om_ET            # Oromo (Ethiopia)
+# om_KE            # Oromo (Kenya)
+# or_IN            # Odia (India)
+# os_RU            # Ossetic (Russia)
+# pa_IN            # Punjabi (India)
+# pa_PK            # Punjabi (Pakistan)
+# pap_AW           # Papiamento (Aruba)
+# pap_CW           # Papiamento (Curacao)
+# pl_PL            # Polish (Poland)
+# ps_AF            # Pashto (Afghanistan)
+# pt_BR            # Brazilian Portuguese (Brazil)
+# pt_PT            # European Portuguese (Portugal)
+# quz_PE           # Cusco Quechua (Peru)
+# raj_IN           # Rajasthani (India)
+# rif_MA           # Tarifit (Morocco)
+# ro_RO            # Romanian (Romania)
+# ru_RU            # Russian (Russia)
+# ru_UA            # Russian (Ukraine)
+# rw_RW            # Kinyarwanda (Rwanda)
+# sa_IN            # Sanskrit (India)
+# sah_RU           # Sakha (Russia)
+# sat_IN           # Santali (India)
+# sc_IT            # Sardinian (Italy)
+# scn_IT           # Sicilian (Italy)
+# sd_IN            # Sindhi (India)
+# sd_IN@devanagari # Sindhi (India)
+# se_NO            # Northern Sami (Norway)
+# sgs_LT           # Samogitian (Lithuania)
+# shn_MM           # Shan (Myanmar/Burma)
+# shs_CA           # Shuswap (Canada)
+# si_LK            # Sinhala (Sri Lanka)
+# sid_ET           # Sidamo (Ethiopia)
+# sk_SK            # Slovak (Slovakia)
+# sl_SI            # Slovenian (Slovenia)
+# sm_WS            # Samoan (Samoa)
+# so_DJ            # Somali (Djibouti)
+# so_ET            # Somali (Ethiopia)
+# so_KE            # Somali (Kenya)
+# so_SO            # Somali (Somalia)
+# sq_AL            # Albanian (Albania)
+# sq_MK            # Albanian (Macedonia)
+# sr_ME            # Serbian (Montenegro)
+# sr_RS            # Serbian (Serbia)
+# sr_RS@latin      # Serbian (Serbia)
+# ss_ZA            # Swati (South Africa)
+# ssy_ER           # Saho (Eritrea)
+# st_ZA            # Southern Sotho (South Africa)
+# su_ID            # Sundanese (Indonesia)
+# sv_FI            # Swedish (Finland)
+# sv_SE            # Swedish (Sweden)
+# sw_KE            # Swahili (Kenya)
+# sw_TZ            # Swahili (Tanzania)
+# syr              # Syriac
+# szl_PL           # Silesian (Poland)
+# ta_IN            # Tamil (India)
+# ta_LK            # Tamil (Sri Lanka)
+# tcy_IN           # Tulu (India)
+# te_IN            # Telugu (India)
+# tg_TJ            # Tajik (Tajikistan)
+# th_TH            # Thai (Thailand)
+# the_NP           # Chitwania Tharu (Nepal)
+# ti_ER            # Tigrinya (Eritrea)
+# ti_ET            # Tigrinya (Ethiopia)
+# tig_ER           # Tigre (Eritrea)
+# tk_TM            # Turkmen (Turkmenistan)
+# tl_PH            # Tagalog (Philippines)
+# tn_ZA            # Tswana (South Africa)
+# to_TO            # Tongan (Tonga)
+# tok              # Toki Pona
+# tpi_PG           # Tok Pisin (Papua New Guinea)
+# tr_CY            # Turkish (Cyprus)
+# tr_TR            # Turkish (Turkey)
+# ts_ZA            # Tsonga (South Africa)
+# tt_RU            # Tatar (Russia)
+# tt_RU@iqtelif    # Tatar (Russia)
+# ug_CN            # Uyghur (China)
+# uk_UA            # Ukrainian (Ukraine)
+# unm_US           # Unami Delaware (United States)
+# ur_IN            # Urdu (India)
+# ur_PK            # Urdu (Pakistan)
+# uz_UZ            # Uzbek (Uzbekistan)
+# uz_UZ@cyrillic   # Uzbek (Uzbekistan)
+# ve_ZA            # Venda (South Africa)
+# vi_VN            # Vietnamese (Vietnam)
+# wa_BE            # Walloon (Belgium)
+# wae_CH           # Walser (Switzerland)
+# wal_ET           # Wolaytta (Ethiopia)
+# wo_SN            # Wolof (Senegal)
+# xh_ZA            # Xhosa (South Africa)
+# yi_US            # Yiddish (United States)
+# yo_NG            # Yoruba (Nigeria)
+# yue_HK           # Cantonese (Hong Kong SAR China)
+# yuw_PG           # Yau (Papua New Guinea)
+# zgh_MA           # Moroccan Tamazight (Morocco)
+# zh_CN            # Chinese (China)
+# zh_HK            # Chinese (Hong Kong SAR China)
+# zh_SG            # Chinese (Singapore)
+# zh_TW            # Chinese (Taiwan)
+# zu_ZA            # Zulu (South Africa)
+
+──── /etc/locale.conf ────────────────────────────────────────────
+    [absent]
+
+──── /etc/hosts ──────────────────────────────────────────────────
+# /etc/hosts: Local Host Database
+#
+# This file describes a number of aliases-to-address mappings for the for 
+# local hosts that share this file.
+#
+# The format of lines in this file is:
+#
+# IP_ADDRESS	canonical_hostname	[aliases...]
+#
+#The fields can be separated by any number of spaces or tabs.
+#
+# In the presence of the domain name service or NIS, this file may not be 
+# consulted at all; see /etc/host.conf for the resolution order.
+#
+
+# IPv4 and IPv6 localhost aliases
+127.0.0.1	lychee.nburch.org lychee localhost
+::1		localhost
+
+#
+# Imaginary network.
+#10.0.0.2               myname
+#10.0.0.3               myfriend
+#
+# According to RFC 1918, you can use the following IP networks for private 
+# nets which will never be connected to the Internet:
+#
+#       10.0.0.0        -   10.255.255.255
+#       172.16.0.0      -   172.31.255.255
+#       192.168.0.0     -   192.168.255.255
+#
+# In case you want to be able to connect directly to the Internet (i.e. not 
+# behind a NAT, ADSL router, etc...), you need real official assigned 
+# numbers.  Do not try to invent your own network numbers but instead get one 
+# from your network provider (if any) or from your regional registry (ARIN, 
+# APNIC, LACNIC, RIPE NCC, or AfriNIC.)
+#
+
+──── /etc/hostname ───────────────────────────────────────────────
+lychee
+
+──── /etc/sysctl.conf ────────────────────────────────────────────
+    [absent]
+
+──── /etc/rc.conf ────────────────────────────────────────────────
+# Global OpenRC configuration settings
+
+# Set to "YES" if you want the rc system to try and start services
+# in parallel for a slight speed improvement. When running in parallel we
+# prefix the service output with its name as the output will get
+# jumbled up.
+# WARNING: whilst we have improved parallel, it can still potentially lock
+# the boot process. Don't file bugs about this unless you can supply
+# patches that fix it without breaking other things!
+#rc_parallel="NO"
+
+# Set rc_interactive to "YES" and you'll be able to press the I key during
+# boot so you can choose to start specific services. Set to "NO" to disable
+# this feature. This feature is automatically disabled if rc_parallel is
+# set to YES.
+#rc_interactive="YES"
+
+# Set to "NO" if you don't want pam_openrc autostarting user services. This
+# effectively disables the pam module, without the need of removing it from
+# the pam configuration files.
+#rc_autostart_user="YES"
+
+# If we need to drop to a shell, you can specify it here.
+# If not specified we use $SHELL, otherwise the one specified in /etc/passwd,
+# otherwise /bin/sh
+# Linux users could specify /sbin/sulogin
+rc_shell=/sbin/sulogin
+
+# Do we allow any started service in the runlevel to satisfy the dependency
+# or do we want all of them regardless of state? For example, if net.eth0
+# and net.eth1 are in the default runlevel then with rc_depend_strict="NO"
+# both will be started, but services that depend on 'net' will work if either
+# one comes up. With rc_depend_strict="YES" we would require them both to
+# come up.
+#rc_depend_strict="YES"
+
+# rc_hotplug controls which services we allow to be hotplugged.
+# A hotplugged service is one started by a dynamic dev manager when a matching
+# hardware device is found.
+# Hotplugged services appear in the "hotplugged" runlevel.
+# If rc_hotplug is set to any value, we compare the name of this service
+# to every pattern in the value, from left to right, and we allow the
+# service to be hotplugged if it matches a pattern, or if it matches no
+# patterns. Patterns can include shell wildcards.
+# To disable services from being hotplugged, prefix patterns with "!".
+#If rc_hotplug is not set or is empty, all hotplugging is disabled.
+# Example - rc_hotplug="net.wlan !net.*"
+# This allows net.wlan and any service not matching net.* to be hotplugged.
+# Example - rc_hotplug="!net.*"
+# This allows services that do not match "net.*" to be hotplugged.
+
+# rc_logger launches a logging daemon to log the entire rc process to
+# /var/log/rc.log
+# NOTE: Linux systems require the devfs service to be started before
+# logging can take place and as such cannot log the sysinit runlevel.
+rc_logger="YES"
+
+# Through rc_log_path you can specify a custom log file.
+# The default value is: /var/log/rc.log
+#rc_log_path="/var/log/rc.log"
+
+# If you want verbose output for OpenRC, set this to yes. If you want
+# verbose output for service foo only, set it to yes in /etc/conf.d/foo.
+#rc_verbose=no
+
+# By default we filter the environment for our running scripts. To allow other
+# variables through, add them here. Use a * to allow all variables through.
+#rc_env_allow="VAR1 VAR2"
+
+# By default we assume that all daemons will start correctly.
+# However, some do not - a classic example is that they fork and return 0 AND
+# then child barfs on a configuration error. Or the daemon has a bug and the
+# child crashes. You can set the number of milliseconds start-stop-daemon
+# waits to check that the daemon is still running after starting here.
+# The default is 0 - no checking.
+#rc_start_wait=100
+
+# rc_nostop is a list of services which will not stop when changing runlevels.
+# This still allows the service itself to be stopped when called directly.
+#rc_nostop=""
+
+# rc will attempt to start crashed services by default.
+# However, it will not stop them by default as that could bring down other
+# critical services.
+#rc_crashed_stop=NO
+#rc_crashed_start=YES
+
+# Set rc_nocolor to yes if you do not want colors displayed in OpenRC
+# output.
+#rc_nocolor=NO
+
+##############################################################################
+# MISC CONFIGURATION VARIABLES
+# There variables are shared between many init scripts
+
+# Set unicode to NO to turn off unicode support for keyboards and screens.
+unicode="YES"
+
+# This is how long fuser should wait for a remote server to respond. The
+# default is 60 seconds, but  it can be adjusted here.
+#rc_fuser_timeout=60
+
+# Below is the default list of network fstypes.
+#
+# afs ceph cifs coda davfs fuse fuse.glusterfs fuse.sshfs gfs glusterfs lustre
+# ncpfs nfs nfs4 ocfs2 shfs smbfs
+#
+# If you would like to add to this list, you can do so by adding your
+# own fstypes to the following variable.
+#extra_net_fs_list=""
+
+##############################################################################
+# SERVICE CONFIGURATION VARIABLES
+# These variables are documented here, but should be configured in
+# /etc/conf.d/foo for service foo and NOT enabled here unless you
+# really want them to work on a global basis.
+# If your service has characters in its name which are not legal in
+# shell variable names and you configure the variables for it in this
+# file, those characters should be replaced with underscores in the
+# variable names as shown below.
+
+# Some daemons are started and stopped via start-stop-daemon.
+# We can set some things on a per service basis, like the nicelevel.
+# These need to be exported
+#export SSD_NICELEVEL="0"
+# Or the ionice level. The format is class[:data] , just like the
+# --ionice start-stop-daemon parameter.
+#export SSD_IONICELEVEL="0:0"
+# Or the OOM score adjustment.
+#export SSD_OOM_SCORE_ADJ="0"
+
+# Pass ulimit parameters
+# If you are using bash in POSIX mode for your shell, note that the
+# ulimit command uses a block size of 512 bytes for the -c and -f
+# options
+#rc_ulimit="-u 30"
+
+# It's possible to define extra dependencies for services like so
+#rc_config="/etc/foo"
+#rc_need="openvpn"
+#rc_use="net.eth0"
+#rc_after="clock"
+#rc_before="local"
+#rc_provide="!net"
+
+# You can also enable the above commands here for each service. Below is an
+# example for service foo.
+#rc_foo_config="/etc/foo"
+#rc_foo_need="openvpn"
+#rc_foo_after="clock"
+
+# Below is an example for service foo-bar. Note that the '-' is illegal
+# in a shell variable name, so we convert it to an underscore.
+# example for service foo-bar.
+#rc_foo_bar_config="/etc/foo-bar"
+#rc_foo_bar_need="openvpn"
+#rc_foo_bar_after="clock"
+
+# You can also remove dependencies.
+# This is mainly used for saying which services do NOT provide net.
+#rc_net_tap0_provide="!net"
+
+# This is the subsystem type.
+# It is used to match against keywords set by the keyword call in the
+# depend function of service scripts.
+#
+# It should be set to the value representing the environment this file is
+# PRESENTLY in, not the virtualization the environment is capable of.
+# If it is commented out, automatic detection will be used.
+#
+# The list below shows all possible settings as well as the host
+# operating systems where they can be used and autodetected.
+#
+# ""               - nothing special
+# "docker"         - Docker container manager (Linux)
+# "podman"         - Podman container manager (Linux)
+# "jail"           - Jail (DragonflyBSD or FreeBSD)
+# "lxc"            - Linux Containers
+# "openvz"         - Linux OpenVZ
+# "prefix"         - Prefix
+# "rkt"            - CoreOS container management system (Linux)
+# "subhurd"        - Hurd subhurds (to be checked)
+# "systemd-nspawn" - Container created by systemd-nspawn (Linux)
+# "uml"            - Usermode Linux
+# "vserver"        - Linux vserver
+# "xen0"           - Xen0 Domain (Linux and NetBSD)
+# "xenU"           - XenU Domain (Linux and NetBSD)
+#rc_sys=""
+
+# if  you use openrc-init, which is currently only available on Linux,
+# this is the default runlevel to activate after "sysinit" and "boot"
+# when booting.
+#rc_default_runlevel="default"
+
+# on Linux and Hurd, this is the number of ttys allocated for logins
+# It is used in the consolefont, keymaps, numlock and termencoding
+# service scripts.
+rc_tty_number=12
+
+##############################################################################
+# LINUX CGROUPS RESOURCE MANAGEMENT
+
+# This sets the mode used to mount cgroups.
+# "hybrid" mounts cgroups version 2 on /sys/fs/cgroup/unified and
+# cgroups version 1 on /sys/fs/cgroup.
+# "legacy" mounts cgroups version 1 on /sys/fs/cgroup
+# "unified" mounts cgroups version 2 on /sys/fs/cgroup
+#rc_cgroup_mode="unified"
+
+# This is a list of controllers which should be enabled for cgroups version 2
+# when hybrid mode is being used.
+# Controllers listed here will not be available for cgroups version 1.
+#rc_cgroup_controllers=""
+
+# This variable contains the cgroups version 2 settings for your services.
+# If this is set in this file, the settings will apply to all services.
+# If you want different settings for each service, place the settings in
+# /etc/conf.d/foo for service foo.
+# The format is to specify the setting and value followed by a newline.
+# Multiple settings and values can be specified.
+# For example, you would use this to set the maximum memory and maximum
+# number of pids for a service.
+#rc_cgroup_settings="
+#memory.max 10485760
+#pids.max max
+#"
+#
+# For more information about the adjustments that can be made with
+# cgroups version 2, see Documentation/cgroups-v2.txt in the linux kernel
+# source tree.
+#rc_cgroup_settings=""
+
+# This switch controls whether or not cgroups version 1 controllers are
+# individually mounted under
+# /sys/fs/cgroup in hybrid or legacy mode.
+#rc_controller_cgroups="YES"
+
+# The following setting turns on the memory.use_hierarchy setting in the
+# root memory cgroup for cgroups v1.
+# It must be set to yes in this file if you want this functionality.
+#rc_cgroup_memory_use_hierarchy="NO"
+
+# The following settings allow you to set up values for the cgroups version 1
+# controllers for your services.
+# They can be set in this file;, however, if you do this, the settings
+# will apply to all of your services.
+# If you want different settings for each service, place the settings in
+# /etc/conf.d/foo for service foo.
+# The format is to specify the names of the settings followed by their
+# values. Each variable can hold multiple settings.
+# For example, you would use this to set the cpu.shares setting in the
+# cpu controller to 512 for your service.
+# rc_cgroup_cpu="
+# cpu.shares 512
+# "
+#
+# For more information about the adjustments that can be made with
+# cgroups version 1, see Documentation/cgroups-v1/* in the linux kernel
+# source tree.
+
+# Set the blkio controller settings for this service.
+#rc_cgroup_blkio=""
+
+# Set the cpu controller settings for this service.
+#rc_cgroup_cpu=""
+
+# Add this service to the cpuacct controller (any value means yes).
+#rc_cgroup_cpuacct=""
+
+# Set the cpuset controller settings for this service.
+#rc_cgroup_cpuset=""
+
+# Set the devices controller settings for this service.
+#rc_cgroup_devices=""
+
+# Set the hugetlb controller settings for this service.
+#rc_cgroup_hugetlb=""
+
+# Set the memory controller settings for this service.
+#rc_cgroup_memory=""
+
+# Set the net_cls controller settings for this service.
+#rc_cgroup_net_cls=""
+
+# Set the net_prio controller settings for this service.
+#rc_cgroup_net_prio=""
+
+# Set the pids controller settings for this service.
+#rc_cgroup_pids=""
+
+# Set this to YES if you want all of the processes in a service's cgroup
+# killed when the service is stopped or restarted.
+# Be aware that setting this to yes means all of a service's
+# child processes will be killed. Keep this in mind if you set this to
+# yes here instead of for the individual services in
+# /etc/conf.d/<service>.
+# To perform this cleanup manually for a stopped service, you can
+# execute cgroup_cleanup with /etc/init.d/<service> cgroup_cleanup or
+# rc-service <service> cgroup_cleanup.
+# If the kernel includes support for cgroup2's cgroup.kill, this is used
+# to reliably teardown the cgroup.
+# If this fails, the process followed in this cleanup is the following:
+# 1. send stopsig (sigterm if it isn't set) to all processes left in the
+# cgroup immediately followed by sigcont.
+# 2. Send sighup to all processes in the cgroup if rc_send_sighup is
+# yes.
+# 3. delay for rc_timeout_stopsec seconds.
+# 4. send sigkill to all processes in the cgroup unless disabled by
+# setting rc_send_sigkill to no.
+# rc_cgroup_cleanup="NO"
+
+# If this is yes, we will send sighup to the processes in the cgroup
+# immediately after stopsig and sigcont.
+#rc_send_sighup="NO"
+
+# This is the amount of time in seconds that we delay after sending sigcont
+# and optionally sighup, before we optionally send sigkill to all
+# processes in the # cgroup.
+# The default is 90 seconds.
+#rc_timeout_stopsec="90"
+
+# If this is set to no, we do not send sigkill to all processes in the
+# cgroup.
+#rc_send_sigkill="YES"
+
+──── /etc/inittab ────────────────────────────────────────────────
+#
+# /etc/inittab:  This file describes how the INIT process should set up
+#                the system in a certain run-level.
+#
+# Author:  Miquel van Smoorenburg, <miquels@cistron.nl>
+# Modified by:  Patrick J. Volkerding, <volkerdi@ftp.cdrom.com>
+# Modified by:  Daniel Robbins, <drobbins@gentoo.org>
+# Modified by:  Martin Schlemmer, <azarah@gentoo.org>
+# Modified by:  Mike Frysinger, <vapier@gentoo.org>
+# Modified by:  Robin H. Johnson, <robbat2@gentoo.org>
+# Modified by:  William Hubbs, <williamh@gentoo.org>
+# Modified by:  Lars Wendler, <polynomial-c@gentoo.org>
+# Modified by:  Aisha Tammy, <gentoo@aisha.cc>
+#
+
+# Default runlevel.
+id:3:initdefault:
+
+# System initialization, mount local filesystems, etc.
+si::sysinit:/sbin/openrc sysinit
+
+# Further system initialization, brings up the boot runlevel.
+rc::bootwait:/sbin/openrc boot
+
+l0u:0:wait:/sbin/telinit u
+l0:0:wait:/sbin/openrc shutdown
+l0s:0:wait:/sbin/halt.sh
+l1:1:wait:/sbin/openrc single
+l2:2:wait:/sbin/openrc nonetwork
+l3:3:wait:/sbin/openrc default
+l4:4:wait:/sbin/openrc default
+l5:5:wait:/sbin/openrc default
+l6u:6:wait:/sbin/telinit u
+l6:6:wait:/sbin/openrc reboot
+l6r:6:wait:/sbin/reboot -dkn
+#z6:6:respawn:/sbin/sulogin
+
+# new-style single-user
+su0:S:wait:/sbin/openrc single
+su1:S:wait:/sbin/sulogin
+
+# TERMINALS
+#x1:12345:respawn:/sbin/agetty 38400 console linux
+c1:12345:respawn:/sbin/agetty --noclear 38400 tty1 linux
+c2:2345:respawn:/sbin/agetty 38400 tty2 linux
+c3:2345:respawn:/sbin/agetty 38400 tty3 linux
+c4:2345:respawn:/sbin/agetty 38400 tty4 linux
+c5:2345:respawn:/sbin/agetty 38400 tty5 linux
+c6:2345:respawn:/sbin/agetty 38400 tty6 linux
+
+# SERIAL CONSOLES
+#s0:12345:respawn:/sbin/agetty -L 115200 ttyS0 vt100
+#s1:12345:respawn:/sbin/agetty -L 115200 ttyS1 vt100
+
+# What to do at the "Three Finger Salute".
+ca:12345:ctrlaltdel:/sbin/shutdown -r now
+
+# Used by /etc/init.d/display-manager to control DM startup.
+# Read the comments in /etc/init.d/display-manager for more
+# info. Do NOT remove, as this will start nothing
+# extra at boot if /etc/init.d/display-manager is not added
+# to the "default" runlevel.
+x:a:once:/usr/bin/startDM
+
+──── /etc/security/limits.conf ───────────────────────────────────
+    [absent]
+
+──── /etc/vconsole.conf ──────────────────────────────────────────
+    [absent]
+
+──── /home/nburch/.zshrc ─────────────────────────────────────────
+# Created by newuser for 5.
+
+──── /home/nburch/.zshenv ────────────────────────────────────────
+    [absent]
+
+──── /home/nburch/.gitconfig ─────────────────────────────────────
+[core]
+	editor = vim
+[user]
+	email = noah@nburch.org
+	name = Noah Burchell
+[pull]
+	rebase = false
+
+──── /home/nburch/.vimrc ─────────────────────────────────────────
+    [empty]
+
+
+════════════════════════════════════════════════════════════════════
+  CONFIG DIRECTORIES
+════════════════════════════════════════════════════════════════════
+
+
+──── /etc/conf.d/agetty ──────────────────────────────────────────
+# make agetty quiet
+#quiet="yes"
+
+# Set the baud rate of the terminal line
+#baud=""
+
+# set the terminal type
+#term_type="linux"
+
+# extra options to pass to agetty for this port
+#agetty_options=""
+
+──── /etc/conf.d/bootlogd ────────────────────────────────────────
+# Put your bootlog options into this
+#BOOTLOGD_ARGS="-l /var/log/boot"
+
+──── /etc/conf.d/bootmisc ────────────────────────────────────────
+# List of /tmp directories we should clean up
+clean_tmp_dirs="/tmp"
+
+# Should we wipe the tmp paths completely or just selectively remove known
+# locks / files / etc... ?
+wipe_tmp="YES"
+
+# Write the initial dmesg log into /var/log/dmesg after boot
+# This may be useful if you need the kernel boot log afterwards
+log_dmesg="YES"
+
+# Save the previous dmesg log to dmesg.old
+# This may be useful if you need to compare the current boot to the
+# previous one.
+#previous_dmesg=no
+
+──── /etc/conf.d/busybox-crond ───────────────────────────────────
+# Config file for /etc/init.d/busybox-crond
+CRONDARGS=
+
+──── /etc/conf.d/busybox-ntpd ────────────────────────────────────
+# Config file for /etc/init.d/busybox-ntpd
+
+# run "/sbin/ntpd --help" to see all possible options.
+
+# Get time from specified server and run in background
+NTPD_OPTS="-N -p pool.ntp.org"
+
+──── /etc/conf.d/busybox-watchdog ────────────────────────────────
+# Config file for /etc/init.d/busybox-watchdog
+
+# run "/sbin/watchdog --help" to see all possible options.
+
+# Periodically write to watchdog device
+WATCHDOG_OPTS="/dev/watchdog"
+
+# optionally set the nice-level
+#SSD_NICELEVEL="-20"
+
+──── /etc/conf.d/chronyd ─────────────────────────────────────────
+# /etc/conf.d/chronyd
+
+CFGFILE="/etc/chrony/chrony.conf"
+
+# Configuration dependant options :
+#      -s - Set system time from RTC if rtcfile directive present
+#      -r - Reload sample histories if dumponexit directive present
+#
+# The combination of "-s -r" allows chronyd to perform long term averaging of
+# the gain or loss rate across system reboots and shutdowns.
+
+ARGS=" -u ntp -F 2"
+
+──── /etc/conf.d/consolefont ─────────────────────────────────────
+# The consolefont service is not activated by default. If you need to
+# use it, you should run "rc-update add consolefont boot" as root.
+#
+# consolefont specifies the default font that you'd like Linux to use on the
+# console.  You can find a good selection of fonts in /usr/share/consolefonts;
+# you shouldn't specify the trailing ".psf.gz", just the font name below.
+# To use the default console font, comment out the CONSOLEFONT setting below.
+consolefont="default8x16"
+
+# consoletranslation is the charset map file to use.  Leave commented to use
+# the default one.  Have a look in /usr/share/consoletrans for a selection of
+# map files you can use.
+#consoletranslation="8859-1_to_uni"
+
+# unicodemap is the unicode map file to use. Leave commented to use the
+# default one. Have a look in /usr/share/unimaps for a selection of map files
+# you can use.
+#unicodemap="iso01"
+
+──── /etc/conf.d/cpupower ────────────────────────────────────────
+# /etc/conf.d/cpupower: config file for /etc/init.d/cpupower
+
+# Options when starting cpufreq (given to the `cpupower` program)
+# Possible options are:
+# -g --governor <GOV> (ie: ondemand, performance, or powersave)
+# -d --min <FREQ> (ie: 1000MHz)
+# -u --max <FREQ> (ie: 2000MHz)
+# -f --freq <FREQ> (requires userspace governor, this *can not* be combined with
+#                   with any other parameters).
+# Frequencies can be passed in Hz, kHz (default), MHz, GHz, or THz by postfixing the
+# value with  the  wanted  unit name, without any space.
+# (frequency in kHz =^ Hz * 0.001 =^ MHz * 1000 =^ GHz * 1000000).
+
+START_OPTS="--governor performance"
+
+# Options when stopping cpufreq (given to the `cpupower` program)
+# This option can be used to change governer on stop. Leaving it empty will ensure
+# the governer remains on the one provided above.
+STOP_OPTS=""
+
+# Extra settings to write to sysfs cpufreq values.
+#
+# up_threshold: threshold for stepping up frequency, where the value represents
+# the percentage of cpu load. 
+#
+# down_threshold: threshold for stepping down frequency, where the value
+# represents the percentage of cpu load.
+#
+# sampling_down_factor: determines how frequently the governor polls the cpu, a
+# value greater than 1 improves performance by reducing the polling when the
+# load is high. This tunable has no effect on behavior at lower CPU frequencies.
+#
+# ignore_nice_load: when set to '1' the processes that are run with a 'nice'
+# value will not count in the usage calculation.
+
+#SYSFS_EXTRA="ondemand/ignore_nice_load=1 ondemand/up_threshold=75 ondemand/sampling_down_factor=10"
+
+──── /etc/conf.d/cronie ──────────────────────────────────────────
+# Settings for the CRON daemon.
+# CRONDARGS= :  any extra command-line startup arguments for crond
+CRONDARGS=
+
+──── /etc/conf.d/devfs ───────────────────────────────────────────
+# OpenRC will attempt each of the following in succession to mount /dev.
+#
+# 1. If there is an entry for /dev in fstab, it will be used.
+# 2. If devtmpfs is defined in the kernel, it will be used.
+# 3. If tmpfs is defined in the kernel, it will be used.
+#
+# Set this to yes if you do not want OpenRC to attempt to mount /dev.
+# skip_mount_dev="NO"
+
+──── /etc/conf.d/device-mapper ───────────────────────────────────
+RC_AFTER="lvm"
+
+──── /etc/conf.d/display-manager ─────────────────────────────────
+rc_need="elogind dbus"
+DISPLAYMANAGER="sddm"
+
+──── /etc/conf.d/dmcrypt ─────────────────────────────────────────
+# /etc/conf.d/dmcrypt
+
+# For people who run dmcrypt on top of some other layer (like raid),
+# use rc_need to specify that requirement.  See the runscript(8) man
+# page for more information.
+
+#--------------------
+# Instructions
+#--------------------
+
+# Note regarding the syntax of this file.  This file is *almost* bash,
+# but each line is evaluated separately.  Separate swaps/targets can be
+# specified.  The init-script which reads this file assumes that a
+# swap= or target= line starts a new section, similar to lilo or grub
+# configuration.
+
+# Note when using gpg keys and /usr on a separate partition, you will
+# have to copy /usr/bin/gpg to /bin/gpg so that it will work properly
+# and ensure that gpg has been compiled statically.
+# See http://bugs.gentoo.org/90482 for more information.
+
+# Note that the init-script which reads this file detects whether your
+# partition is LUKS or not. No mkfs is run unless you specify a makefs
+# option.
+
+# Global options:
+#----------------
+
+# How long to wait for each timeout (in seconds).
+dmcrypt_key_timeout=1
+
+# Max number of checks to perform (see dmcrypt_key_timeout).
+#dmcrypt_max_timeout=300
+
+# Number of password retries.
+dmcrypt_retries=5
+
+# Arguments:
+#-----------
+# target=<name>                      == Mapping name for partition.
+# swap=<name>                        == Mapping name for swap partition.
+# source='<dev>'                     == Real device for partition.
+#                                    Note: You can (and should) specify a tag like UUID
+#                                    for blkid (see -t option).  This is safer than using
+#                                    the full path to the device.
+# key='</path/to/keyfile>[:<mode>]'  == Fullpath from / or from inside removable media.
+# header='</path/to/header>'         == Full path to detached LUKS header file.
+# remdev='<dev>'                     == Device that will be assigned to removable media.
+# gpg_options='<opts>'               == Default are --quiet --decrypt
+# options='<opts>'                   == cryptsetup, for LUKS you can only use --readonly
+# loop_file='<file>'                 == Loopback file.
+#                                    Note: If you omit $source, then a free loopback will
+#                                    be looked up automatically.
+# pre_mount='cmds'                   == commands to execute before mounting partition.
+# post_mount='cmds'                  == commands to execute after mounting partition.
+# wait=5                             == wait given amount of seconds for source or
+#                                       detached header file appear.
+#-----------
+# Supported Modes
+# gpg					== decrypt and pipe key into cryptsetup.
+#						Note: new-line character must not be part of key.
+#						Command to erase \n char: 'cat key | tr -d '\n' > cleanKey'
+
+#--------------------
+# dm-crypt examples
+#--------------------
+
+## swap
+# Swap partitions. These should come first so that no keys make their
+# way into unencrypted swap.
+# If no options are given, they will default to: -c aes -h sha1 -d /dev/urandom
+# If no makefs is given then mkswap will be assumed
+#swap=crypt-swap
+#source='/dev/hda2'
+
+## /home with passphrase
+#target=crypt-home
+#source='/dev/hda5'
+
+## /home with regular keyfile
+#target=crypt-home
+#source='/dev/hda5'
+#key='/full/path/to/homekey'
+
+## /home with regular keyfile and detached header
+#target=crypt-home
+#source='/dev/hda5'
+#key='/full/path/to/homekey'
+#header='/full/path/to/header/file'
+
+## /home with gpg protected key
+#target=crypt-home
+#source='/dev/hda5'
+#key='/full/path/to/homekey:gpg'
+
+## /home with regular keyfile on removable media(such as usb-stick)
+#target=crypt-home
+#source='/dev/hda5'
+#key='/full/path/to/homekey'
+#remdev='/dev/sda1'
+
+## /home with gpg protected key on removable media(such as usb-stick)
+#target=crypt-home
+#source='/dev/hda5'
+#key='/full/path/to/homekey:gpg'
+#remdev='/dev/sda1'
+
+## /tmp with regular keyfile
+#target=crypt-tmp
+#source='/dev/hda6'
+#key='/full/path/to/tmpkey'
+#pre_mount='/sbin/mkreiserfs -f -f ${dev}'
+#post_mount='chown root:root ${mount_point}; chmod 1777 ${mount_point}'
+
+## Loopback file example
+#target='crypt-loop-home'
+#source='/dev/loop0'
+#loop_file='/mnt/crypt/home'
+
+# The file must be terminated by a newline.  Or leave this comment last.
+
+──── /etc/conf.d/dmesg ───────────────────────────────────────────
+# Sets the level at which logging of messages is done to the
+# console.  See dmesg(1) for more info.
+dmesg_level="1"
+
+──── /etc/conf.d/elogind ─────────────────────────────────────────
+# /etc/conf.d/elogind: config file for /etc/init.d/elogind
+
+# this is the elogind executable
+ELOGIND_EXEC="/usr/lib/elogind/elogind"
+
+# this is where elogind will store its pid file
+ELOGIND_PIDFILE="/run/elogind.pid"
+
+──── /etc/conf.d/fancontrol ──────────────────────────────────────
+# /etc/conf.d/fancontrol
+
+# Configuration file
+#FANCONTROL_CONFIGFILE="/etc/fancontrol"
+
+# You can use this configuration option to pass additional options to the
+# start-stop-daemon, see start-stop-daemon(8) for more details.
+# Per default we forces fancontrol into background and wait 1000ms after we
+# have started the service to ensure that the daemon is really up and
+# running.
+#FANCONTROL_SSDARGS="--background --wait 1000"
+
+# The termination timeout (start-stop-daemon parameter "retry") ensures
+# that the service will be terminated within a given time (60 + 5 seconds
+# per default) when you are stopping the service.
+#FANCONTROL_TERMTIMEOUT="TERM/60/KILL/5"
+
+──── /etc/conf.d/fsck ────────────────────────────────────────────
+# Pass any arguments to fsck.
+# By default we preen.
+# Linux systems also force -C0 and -T.
+# If fsck_args is not specified then Linux systems also use -A
+# (and -R if / is rw)
+#fsck_args="-p"
+
+# We can also specify the passno in /etc/fstab to check
+# If you multiplex fsck (ie ln -s fsck /etc/init.d/fsck.late) then you can
+# do an fsck outside of the normal scope, say for /home.
+# Here are some examples:-
+#fsck_passno="=1 =2"
+#fsck_passno=">1"
+#fsck_passno="<2"
+
+# If passno is not enough granularity, you can also specify mountpoints to
+# check. This should NOT be used for the default non-multiplexed fsck, or your
+# system might not be checked. Additionally, it is mutually exclusive with
+# the fsck_passno setting.
+#fsck_mnt=""
+#fsck_mnt="/home"
+
+# Most modern fs's don't require a full fsck on boot, but for those that do
+# it may be advisable to skip this when running on battery.
+# WARNING: Do not turn this off if you have any JFS partitions.
+fsck_on_battery="YES"
+
+# fsck_shutdown causes fsck to trigger during shutdown as well as startup.
+# The end result of this is that if any periodic non-root filesystem checks are
+# scheduled, under normal circumstances the actual check will happen during
+# shutdown rather than at next boot.
+# This is useful when periodic filesystem checks are causing undesirable
+# delays at startup, but such delays at shutdown are acceptable.
+fsck_shutdown="NO"
+
+# fsck_abort_on_errors can be set to no to cause fsck to not abort on
+# errors.
+# This is useful when periodic filesystem checks are causing undesirable
+# aborts.
+fsck_abort_on_errors="YES"
+
+──── /etc/conf.d/git-daemon ──────────────────────────────────────
+# conf.d file for git-daemon
+#
+# Please check man 1 git-daemon for more information about the options
+# git-daemon accepts. You MUST edit this to include your repositories you wish
+# to serve.
+#
+# Some of the meaningful options are:
+#   --syslog      --- Enables syslog logging
+#   --verbose     --- Enables verbose logging
+#   --export-all  --- Exports all repositories
+#   --port=XXXX   --- Starts in port XXXX instead of 9418
+#
+GITDAEMON_OPTS="--syslog --base-path=/var/git"
+
+# To run an anonymous git safely, the following user should be able to only
+# read your Git repositories. It should not be able to write to anywhere on
+# your system, esp. not the repositories.
+GIT_USER="nobody"
+GIT_GROUP="nobody"
+
+──── /etc/conf.d/hostname ────────────────────────────────────────
+# Hostname fallback if /etc/hostname does not exist
+hostname="lychee"
+
+──── /etc/conf.d/hwclock ─────────────────────────────────────────
+# Set CLOCK to "UTC" if your Hardware Clock is set to UTC (also known as
+# Greenwich Mean Time).  If that clock is set to the local time, then
+# set CLOCK to "local".  Note that if you dual boot with Windows, then
+# you should set it to "local".
+clock="UTC"
+
+# If you want the hwclock script to set the system time (software clock)
+# to match the current hardware clock during bootup, leave this
+# commented out.
+# However, you can set this to "NO" if you are running a modern kernel
+# and using NTP to synchronize your system clock.
+#clock_hctosys="YES"
+
+# If you do not want to set the hardware clock to the current system
+# time (software clock) during shutdown, set this to no.
+#clock_systohc="YES"
+
+# If you wish to pass any other arguments to hwclock during bootup,
+# you may do so here. Alpha users may wish to use --arc or --srm here.
+clock_args=""
+
+──── /etc/conf.d/ip6tables ───────────────────────────────────────
+# /etc/conf.d/ip6tables
+
+# Set wait option for xtables lock in seconds
+# DEFAULT: 60
+#IPTABLES_LOCK_WAIT_TIME="60"
+
+# Set wait interval option for xtables lock in microseconds
+# DEFAULT: 1000
+#IPTABLES_LOCK_WAIT_INTERVAL="1000"
+
+# Location in which ip6tables initscript will save set rules on
+# service shutdown
+IP6TABLES_SAVE="/var/lib/ip6tables/rules-save"
+
+# Options to pass to ip6tables-save and ip6tables-restore 
+SAVE_RESTORE_OPTIONS="-c"
+
+# Save state on stopping ip6tables
+SAVE_ON_STOP="yes"
+
+# If you need to log ip6tables messages as soon as ip6tables starts,
+# AND your logger does NOT depend on the network, then you may wish
+# to uncomment the next line.
+# If your logger depends on the network, and you uncomment this line
+# you will create an unresolvable circular dependency during startup.
+# After commenting or uncommenting this line, you must run 'rc-update -u'.
+#rc_use="logger"
+
+──── /etc/conf.d/iptables ────────────────────────────────────────
+# /etc/conf.d/iptables
+
+# Set wait option for xtables lock in seconds
+# DEFAULT: 60
+#IPTABLES_LOCK_WAIT_TIME="60"
+
+# Set wait interval option for xtables lock in microseconds
+# DEFAULT: 1000
+#IPTABLES_LOCK_WAIT_INTERVAL="1000"
+
+# Location in which iptables initscript will save set rules on
+# service shutdown
+IPTABLES_SAVE="/var/lib/iptables/rules-save"
+
+# Options to pass to iptables-save and iptables-restore 
+SAVE_RESTORE_OPTIONS="-c"
+
+# Save state on stopping iptables
+SAVE_ON_STOP="yes"
+
+# If you need to log iptables messages as soon as iptables starts,
+# AND your logger does NOT depend on the network, then you may wish
+# to uncomment the next line.
+# If your logger depends on the network, and you uncomment this line
+# you will create an unresolvable circular dependency during startup.
+# After commenting or uncommenting this line, you must run 'rc-update -u'.
+#rc_use="logger"
+
+──── /etc/conf.d/keymaps ─────────────────────────────────────────
+# Use keymap to specify the default console keymap.  There is a complete tree
+# of keymaps in /usr/share/keymaps to choose from.
+keymap="us"
+
+# Should we first load the 'windowkeys' console keymap?  Most x86 users will
+# say "yes" here.  Note that non-x86 users should leave it as "no".
+# Loading this keymap will enable VT switching (like ALT+Left/Right)
+# using the special windows keys on the linux console.
+windowkeys="YES"
+
+# The maps to load for extended keyboards.  Most users will leave this as is.
+extended_keymaps=""
+#extended_keymaps="backspace keypad euro2"
+
+# Tell dumpkeys(1) to interpret character action codes to be
+# from the specified character set.
+# This only matters if you set unicode="yes" in /etc/rc.conf.
+# For a list of valid sets, run `dumpkeys --help`
+dumpkeys_charset=""
+
+# Some fonts map AltGr-E to the currency symbol instead of the Euro.
+# To fix this, set to "yes"
+fix_euro="NO"
+
+──── /etc/conf.d/killprocs ───────────────────────────────────────
+# If you wish to pass any options to kill_all during shutdown,
+# you should do so here.
+#
+# The setting is called killall5_opts because the options here are meant
+# to be identical to those you could pass to killall5.
+killall5_opts=""
+
+# If you need to delay after each kill attempt during shutdown, set the amount
+# of time you need to delay here. This gets passed directly to sleep in
+# the shell.
+# kill_delay=0
+
+──── /etc/conf.d/lm_sensors ──────────────────────────────────────
+# /etc/conf.d/lm_sensors
+
+# NOTE:
+# For module loading please use /etc/modules-load.d/lm_sensors.conf
+
+──── /etc/conf.d/localmount ──────────────────────────────────────
+# Stop the unmounting of certain points.
+# This could be useful for some NFS related work.
+#no_umounts="/dir1:/var/dir2"
+#
+# Mark certain mount points as critical.
+# This contains a space separated list of mount points which should be
+# considered critical. If one of these mount points cannot be mounted,
+# localmount will fail.
+# By default, this is empty.
+#critical_mounts="/home /var"
+
+──── /etc/conf.d/minidlna ────────────────────────────────────────
+# /etc/conf.d/minidlna
+
+# Should minidlna rescan the entire collection on startup?
+# Warning: This may take a long time!
+RESCAN="false"
+
+# The location of the config file
+#CONFIG="/etc/minidlna.conf"
+
+# Specify the user/group minidlna should run as
+#M_USER="minidlna"
+#M_GROUP="minidlna"
+
+# vim: ft=gentoo-conf-d
+
+──── /etc/conf.d/modules ─────────────────────────────────────────
+# Linux users can define a list of modules for a specific kernel version,
+# a released kernel version, a main kernel version or all kernel versions.
+# The most specific versioned variable will take precedence.
+# FreeBSD users can only use the modules="foo bar" setting.
+#modules_2_6_23_gentoo_r5="ieee1394 ohci1394"
+#modules_2_6_23="tun ieee1394"
+#modules_2_6="tun"
+#modules_2="ipv6"
+#modules="ohci1394"
+
+# Linux users can give the modules some arguments if needed, per version
+# if necessary.
+# Again, the most specific versioned variable will take precedence.
+# This is not supported on FreeBSD.
+#module_ieee1394_args="debug"
+#module_ieee1394_args_2_6_23_gentoo_r5="debug2"
+#module_ieee1394_args_2_6_23="debug3"
+#module_ieee1394_args_2_6="debug4"
+#module_ieee1394_args_2="debug5"
+
+# You should consult your kernel documentation and configuration
+# for a list of modules and their options.
+
+──── /etc/conf.d/mtab ────────────────────────────────────────────
+# As far as we are aware, there are no modern linux tools or use cases
+# which require /etc/mtab to be a separate file from /proc/self/mounts,
+# so this setting should be commented out.
+# If it is set to yes, please comment it out and run this command:
+# # rc-service mtab restart
+# In the future, the mtab service will be removed since we are not aware
+# of any need to manipulate /etc/mtab as a separate file from
+# /proc/self/mounts.
+# If you have a technical reason we should keep this support, please
+# open an issue at https://github.com/openrc/openrc/issues and let us
+# know about your situation.
+# This setting controls whether /etc/mtab is a file or symbolic link.
+# mtab_is_file=no
+
+──── /etc/conf.d/netmount ────────────────────────────────────────
+# You will need to set the dependencies in the netmount script to match
+# the network configuration tools you are using. This should be done in
+# this file by following the examples below, and not by changing the
+# service script itself.
+#
+# Each of these examples is meant to be used separately. So, for
+# example, do not set rc_need to something like "net.eth0 dhcpcd".
+#
+# If you are using newnet and configuring your interfaces with static
+# addresses with the network script, you  should use this setting.
+#
+#rc_need="network"
+#
+# If you are using oldnet, you must list the specific net.* services you
+# need.
+#
+# This example assumes all of your netmounts can be reached on
+# eth0.
+#
+#rc_need="net.eth0"
+#
+# This example assumes some of your netmounts are on eth1 and some
+# are on eth2.
+#
+#rc_need="net.eth1 net.eth2"
+#
+# If you are using a dynamic network management tool like
+# NetworkManager, dhcpcd in standalone mode, wicd, badvpn-ncd, etc, to
+# manage the network interfaces with the routes to your netmounts, you
+# should list that tool.
+#
+#rc_need="NetworkManager"
+#rc_need="dhcpcd"
+#rc_need="wicd"
+#
+# The default setting is designed to be backward compatible with our
+# current setup, but you are highly discouraged from using this. In
+# other words, please change it to be more suited to your system.
+#
+rc_need="net"
+#
+# Mark certain mount points as critical.
+# This contains aspace separated list of mount points which should be
+# considered critical. If one of these mount points cannot be mounted,
+# netmount will fail.
+# By default, this is empty.
+#critical_mounts="/home /var"
+
+──── /etc/conf.d/net-online ──────────────────────────────────────
+# The interfaces setting controls which interfaces the net-online
+# service considers in deciding whether the network is active. The
+# default is all interfaces that support ethernet.
+#interfaces=""
+
+# This setting controls whether a ping test is included in the test for
+# network connectivity after all interfaces are active.
+#include_ping_test=no
+
+# This setting is the host to attempt to ping if the above is yes.
+# The default is google.com.
+#ping_test_host=some.host.name
+
+# The timeout setting controls how long the net-online service waits
+# for the network to be configured.
+# The default is 120 seconds.
+# if this is set to 0, the wait is infinite.
+#timeout=120
+
+──── /etc/conf.d/pciparm ─────────────────────────────────────────
+# Apply to all devices:
+# PCIPARM_ALL="...."
+# Cards also can be addressed by vid:pid or by bus:slot.func
+# (see setpci man page relative to -d and -s options)
+# PCIPARM_(BUS|VENDOR)_#="...."
+# Where # is sequentially numbered from zero.
+
+# Examples:
+# "open up" the PCI bus by allowing fairly long bursts
+# for all devices, increasing performance
+# (equivalent to: setpci -v -d *:* latency_timer=b0)
+#PCIPARM_ALL="latency_timer=b0"
+
+# maximize latency timers for network and audio,
+# allowing them to transmit more data per burst,
+# preventing buffer over/under-run conditions
+#PCIPARM_BUS_0="00:04.0 latency_timer=ff"
+#PCIPARM_BUS_1="01:04.0 latency_timer=ff"
+#PCIPARM_VENDOR_0="1057:3410 latency_timer=ff"
+
+# -v : whether to be verbose about changes
+# -D : dry-run, no commit
+# -f : do not warn if the change is already set
+# (see the setpci manpage for more advanced options)
+SETPCI_OPT="-f"
+
+──── /etc/conf.d/pydoc-3.14 ──────────────────────────────────────
+# /etc/init.d/pydoc.conf
+
+# This file contains the configuration for pydoc's internal webserver.
+
+# Default port for Python's pydoc server.
+PYDOC3_14_PORT="7464"
+
+──── /etc/conf.d/rsyncd ──────────────────────────────────────────
+# /etc/conf.d/rsyncd: config file for /etc/init.d/rsyncd
+
+# see man pages for rsync or run `rsync --help`
+# for valid cmdline options
+#RSYNC_OPTS=""
+
+──── /etc/conf.d/seedrng ─────────────────────────────────────────
+# The convention in this file is to show the default settings commented out.
+#
+# Sometimes you want to have urandom start before "localmount" (say for crypt
+# swap), so you will need to customize this behavior.  If you have /var on a
+# separate partition, make sure paths under /var are adjusted to point to
+# locations on your root device.
+#
+# Set skip_credit to yes or true if you do not want seed files to actually
+# credit the random number generator. For example, you should set this if you
+# plan to replicate the file system image without removing the contents of
+# ${seed_dir}.
+#
+# seed_dir=/var/lib/seedrng
+# skip_credit=no
+
+──── /etc/conf.d/sshd ────────────────────────────────────────────
+# /etc/conf.d/sshd: config file for /etc/init.d/sshd
+
+# Where is your sshd_config file stored?
+
+SSHD_CONFDIR="${RC_PREFIX%/}/etc/ssh"
+
+
+# Any random options you want to pass to sshd.
+# See the sshd(8) manpage for more info.
+
+SSHD_OPTS=""
+
+
+# Wait one second (length chosen arbitrarily) to see if sshd actually
+# creates a PID file, or if it crashes for some reason like not being
+# able to bind to the address in ListenAddress.
+
+#SSHD_SSD_OPTS="--wait 1000"
+
+
+# Pid file to use (needs to be absolute path).
+
+#SSHD_PIDFILE="${RC_PREFIX%/}/run/sshd.pid"
+
+
+# Path to the sshd binary (needs to be absolute path).
+
+#SSHD_BINARY="${RC_PREFIX%/}/usr/sbin/sshd"
+
+
+# Path to the ssh-keygen binary (needs to be absolute path).
+
+#SSHD_KEYGEN_BINARY="${RC_PREFIX%/}/usr/bin/ssh-keygen"
+
+
+# May be needed if ListenAddress is used to ensure that the interface
+# has been configured.
+#rc_need="net.eth0"
+
+──── /etc/conf.d/swap ────────────────────────────────────────────
+# If you are only using local swap partitions, you should not change
+# this file. Otherwise, you need to uncomment the below rc_before line
+# followed by the appropriate rc_need line.
+#rc_before="!localmount"
+#
+# If you are using swap files stored on local file systems, uncomment
+# this line.
+#rc_need="localmount"
+#
+# If you are using swap files stored on network file systems or swap
+# partitions stored on network block devices such as iSCSI, uncomment
+# this line.
+#rc_need="netmount"
+
+──── /etc/conf.d/swclock ─────────────────────────────────────────
+# This is the location of the reference file swclock uses to set the
+# system date and time.
+# This is the default path. If you are using it, you do not need to
+# uncomment it. If you are using the default and have /var on its own
+# file system, you need to add the appropriate rc_after setting.
+# swclock_file=/var/lib/misc/openrc-shutdowntime
+
+──── /etc/conf.d/sysklogd ────────────────────────────────────────
+# Config file for /etc/init.d/sysklogd
+
+SYSLOGD="-m 0 -s -s -r 10M:10"
+
+──── /etc/conf.d/udev ────────────────────────────────────────────
+# /etc/conf.d/udev: config file for udev
+
+# Add extra command line options to udevd, use with care
+# udevd --help for possible values
+#udev_opts=""
+
+# Run udevd --debug and write output to /run/udevdebug.log
+# Should not be kept on as it fills diskspace slowly
+#udev_debug="YES"
+
+──── /etc/conf.d/udev-settle ─────────────────────────────────────
+# /etc/conf.d/udev-settle: config file for udev-settle
+
+# Timeout in seconds to wait for processing of uevents at boot.
+# There should be no need to change this.
+#udev_settle_timeout=120
+
+──── /etc/conf.d/udev-trigger ────────────────────────────────────
+# /etc/conf.d/udev-trigger: config file for udev-trigger
+
+# udev can trigger coldplug events which cause services to start and
+# kernel modules to be loaded.
+# Services are deferred to start in the boot runlevel.
+# Set rc_coldplug="NO" if you don't want this.
+# If you want module coldplugging but not coldplugging of services then you
+# can disable service coldplugging in baselayout/openrc config files.
+# The setting is named different in different versions.
+# in /etc/rc.conf: rc_hotplug="!*" or
+# in /etc/conf.d/rc: rc_plug_services="!*"
+#rc_coldplug="YES"
+
+# We can create a /dev/root symbolic link to point to the root device in
+# some situations. This is on by default because some software relies on
+# it,. However, this software should be fixed to not do this.
+# For more information, see
+# https://bugs.gentoo.org/show_bug.cgi?id=438380.
+# If you are not using any affected software, you do not need this, so
+# feel free to turn it off.
+#rc_dev_root_symlink="YES"
+
+# Run udevadmin monitor to get a log of all events
+# in /run/udevmonitor.log
+#udev_monitor="YES"
+
+# Keep udevmonitor running after populating /dev.
+#udev_monitor_keep_running="no"
+
+# Set cmdline options for udevmonitor.
+# could be some of --env --kernel --udev
+#udev_monitor_opts="--env"
+
+──── /etc/sysctl.d/99-lychee.conf ────────────────────────────────
+vm.max_map_count = 2147483642
+vm.dirty_bytes = 268435456
+vm.dirty_background_bytes = 134217728
+vm.vfs_cache_pressure = 50
+fs.inotify.max_user_instances = 8192
+
+──── /etc/sysctl.d/README ────────────────────────────────────────
+Kernel system variables configuration files
+
+Files found under the /etc/sysctl.d directory that end with .conf are
+parsed within sysctl(8) at boot time.  If you want to set kernel variables
+you can either edit /etc/sysctl.conf or make a new file.
+
+The filename isn't important, but don't make it a package name as it may clash
+with something the package builder needs later. The file name must end
+with .conf, or it will not be read.
+
+The recommended location for local system settings is /etc/sysctl.d/local.conf
+but as long as you follow the rules for the name of the file, anything will
+work. see the sysctl.conf(5) man page for details of the format.
+
+──── /etc/modprobe.d
+    [absent]
+
+──── /etc/modules-load.d/lm_sensors.conf ─────────────────────────
+# Generated by sensors-detect on Fri Aug 21 22:15:29 2026
+nct6683
+
+──── /etc/udev/rules.d
+    [absent]
+
+──── /etc/env.d/00glibc ──────────────────────────────────────────
+LDPATH="include ld.so.conf.d/*.conf"
+
+──── /etc/env.d/00manpager ───────────────────────────────────────
+MANPAGER=manpager
+
+──── /etc/env.d/02locale ─────────────────────────────────────────
+LANG="en_AU.UTF-8"
+
+──── /etc/env.d/04gcc-x86_64-pc-linux-gnu ────────────────────────
+# Autogenerated by 'gcc-config'.
+GCC_SPECS=""
+MANPATH="/usr/share/gcc-data/x86_64-pc-linux-gnu/15/man"
+INFOPATH="/usr/share/gcc-data/x86_64-pc-linux-gnu/15/info"
+
+──── /etc/env.d/05binutils ───────────────────────────────────────
+MANPATH=/usr/share/binutils-data/x86_64-pc-linux-gnu/2.46.1/man
+INFOPATH=/usr/share/binutils-data/x86_64-pc-linux-gnu/2.46.1/info
+
+──── /etc/env.d/06autoconf97927 ──────────────────────────────────
+INFOPATH="/usr/share/autoconf-2.72/info"
+
+──── /etc/env.d/06automake98981 ──────────────────────────────────
+INFOPATH="/usr/share/automake-1.18.1/info"
+
+──── /etc/env.d/09sandbox ────────────────────────────────────────
+CONFIG_PROTECT_MASK="/etc/sandbox.d"
+
+──── /etc/env.d/20java-config ────────────────────────────────────
+MANPATH="/etc/java-config-2/current-system-vm/man/"
+
+──── /etc/env.d/30xdg-data-local ─────────────────────────────────
+XDG_DATA_DIRS="/usr/local/share"
+COLON_SEPARATED="XDG_DATA_DIRS XDG_CONFIG_DIRS"
+
+──── /etc/env.d/37fontconfig ─────────────────────────────────────
+CONFIG_PROTECT_MASK="/etc/fonts/fonts.conf"
+
+──── /etc/env.d/50baselayout ─────────────────────────────────────
+# /etc/env.d/50baselayout
+# Do not edit this file
+
+PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/opt/bin"
+ROOTPATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/opt/bin"
+MANPATH="/usr/local/share/man:/usr/share/man"
+INFOPATH="/usr/share/info"
+CONFIG_PROTECT_MASK="/etc/gentoo-release"
+LDPATH='/usr/lib64:/usr/local/lib64:/usr/lib:/usr/local/lib'
+
+──── /etc/env.d/50deno ───────────────────────────────────────────
+DENO_NO_UPDATE_CHECK=1
+
+──── /etc/env.d/50npm ────────────────────────────────────────────
+NPM_CONFIG_GLOBALCONFIG=/etc/npm/npmrc
+
+──── /etc/env.d/50rust-1.96.1 ────────────────────────────────────
+MANPATH="/usr/lib/rust/man-1.96.1"
+
+──── /etc/env.d/50rust-bin-1.94.1 ────────────────────────────────
+MANPATH="/usr/lib/rust/man-bin-1.94.1"
+
+
+──── /etc/env.d/51dconf ──────────────────────────────────────────
+CONFIG_PROTECT_MASK="/etc/dconf"
+GSETTINGS_BACKEND="dconf"
+
+──── /etc/env.d/60llvm-9977 ──────────────────────────────────────
+PATH="/usr/lib/llvm/22/bin"
+# we need to duplicate it in ROOTPATH for Portage to respect...
+ROOTPATH="/usr/lib/llvm/22/bin"
+MANPATH="/usr/lib/llvm/22/share/man"
+LDPATH="/usr/lib/llvm/22/lib64"
+
+──── /etc/env.d/60llvm-9978 ──────────────────────────────────────
+PATH="/usr/lib/llvm/21/bin"
+# we need to duplicate it in ROOTPATH for Portage to respect...
+ROOTPATH="/usr/lib/llvm/21/bin"
+MANPATH="/usr/lib/llvm/21/share/man"
+LDPATH="/usr/lib/llvm/21/lib64"
+
+──── /etc/env.d/60llvm-9979 ──────────────────────────────────────
+PATH="/usr/lib/llvm/20/bin"
+# we need to duplicate it in ROOTPATH for Portage to respect...
+ROOTPATH="/usr/lib/llvm/20/bin"
+MANPATH="/usr/lib/llvm/20/share/man"
+LDPATH="/usr/lib/llvm/20/lib64"
+
+──── /etc/env.d/70less ───────────────────────────────────────────
+LESSOPEN="|lesspipe %s"
+LESS="-R -M --shift 5"
+
+──── /etc/env.d/78kf ─────────────────────────────────────────────
+CONFIG_PROTECT=/usr/share/config
+
+──── /etc/env.d/90lex ────────────────────────────────────────────
+LEX=flex
+
+──── /etc/env.d/90xdg-data-base ──────────────────────────────────
+XDG_DATA_DIRS="/usr/share"
+XDG_CONFIG_DIRS="/etc/xdg"
+
+──── /etc/env.d/98ca-certificates ────────────────────────────────
+CONFIG_PROTECT_MASK="/etc/ca-certificates.conf"
+
+──── /etc/env.d/98-moz-gmp-openh264 ──────────────────────────────
+MOZ_GMP_PATH="/usr/lib64/nsbrowser/plugins/gmp-gmpopenh264/system-installed"
+
+──── /etc/env.d/99gentoolkit-env ─────────────────────────────────
+CONFIG_PROTECT_MASK="/etc/revdep-rebuild"
+
+──── /etc/env.d/binutils/config-x86_64-pc-linux-gnu ──────────────
+CURRENT=2.46.1
+
+──── /etc/env.d/binutils/x86_64-pc-linux-gnu-2.46.1 ──────────────
+TARGET="x86_64-pc-linux-gnu"
+VER="2.46.1"
+LIBPATH="/usr/lib64/binutils/x86_64-pc-linux-gnu/2.46.1"
+
+──── /etc/env.d/gcc/config-x86_64-pc-linux-gnu ───────────────────
+CURRENT=x86_64-pc-linux-gnu-15
+
+──── /etc/env.d/gcc/x86_64-pc-linux-gnu-15 ───────────────────────
+GCC_PATH="/usr/x86_64-pc-linux-gnu/gcc-bin/15"
+LDPATH="/usr/lib/gcc/x86_64-pc-linux-gnu/15:/usr/lib/gcc/x86_64-pc-linux-gnu/15/32"
+MANPATH="/usr/share/gcc-data/x86_64-pc-linux-gnu/15/man"
+INFOPATH="/usr/share/gcc-data/x86_64-pc-linux-gnu/15/info"
+STDCXX_INCDIR="g++-v15"
+CTARGET="x86_64-pc-linux-gnu"
+GCC_SPECS=""
+MULTIOSDIRS="../lib64:../lib"
+
+──── /etc/env.d/rust/last-set ────────────────────────────────────
+/usr/bin/cargo
+/usr/bin/rustdoc
+/usr/bin/rust-gdb
+/usr/bin/rust-gdbgui
+/usr/bin/rust-lldb
+/usr/lib/rustlib
+/usr/lib/rust/lib
+/usr/lib/rust/man
+/usr/share/doc/rust
+/usr/bin/clippy-driver
+/usr/bin/cargo-clippy
+/usr/bin/rustfmt
+/usr/bin/cargo-fmt
+/usr/lib/rust/libexec
+/usr/bin/rust-analyzer
+
+──── /etc/env.d/rust/provider-rust-1.96.1 ────────────────────────
+/usr/bin/cargo
+/usr/bin/rustdoc
+/usr/bin/rust-gdb
+/usr/bin/rust-gdbgui
+/usr/bin/rust-lldb
+/usr/lib/rustlib
+/usr/lib/rust/lib
+/usr/lib/rust/man
+/usr/share/doc/rust
+/usr/bin/clippy-driver
+/usr/bin/cargo-clippy
+/usr/bin/rustfmt
+/usr/bin/cargo-fmt
+/usr/lib/rust/libexec
+/usr/bin/rust-analyzer
+
+──── /etc/env.d/rust/provider-rust-bin-1.94.1 ────────────────────
+/usr/bin/cargo
+/usr/bin/rustdoc
+/usr/bin/rust-gdb
+/usr/bin/rust-gdbgui
+/usr/bin/rust-lldb
+/usr/lib/rustlib
+/usr/lib/rust/lib
+/usr/lib/rust/man
+/usr/share/doc/rust
+/usr/bin/clippy-driver
+/usr/bin/cargo-clippy
+/usr/bin/rustfmt
+/usr/bin/cargo-fmt
+
+──── /etc/X11/xorg.conf.d
+    [absent]
+
+──── /etc/sddm.conf.d/01gentoo.conf ──────────────────────────────
+[General]
+# Remove qtvirtualkeyboard as InputMethod default
+InputMethod=
+
+──── /etc/sddm.conf.d/10-wayland.conf ────────────────────────────
+[General]
+DisplayServer=wayland
+GreeterEnvironment=QT_WAYLAND_SHELL_INTEGRATION=layer-shell
+
+[Wayland]
+CompositorCommand=kwin_wayland --drm --no-lockscreen --no-global-shortcuts --locale1
+
+──── /etc/sddm.conf.d/kde_settings.conf ──────────────────────────
+[Autologin]
+Relogin=false
+Session=
+User=
+
+[General]
+HaltCommand=
+RebootCommand=
+
+[Theme]
+Current=breeze
+
+[Users]
+MaximumUid=60000
+MinimumUid=1000
+
+
+════════════════════════════════════════════════════════════════════
+  SECRETS NOTE
+════════════════════════════════════════════════════════════════════
+
+    Deliberately NOT captured, because this file lands unencrypted in $HOME:
+
+      /etc/NetworkManager/system-connections/   WiFi PSKs, 802.1x certs
+      ~/.ssh/id_*                               private keys
+      ~/.gnupg/                                 private keyring
+      /etc/shadow                               password hashes
+
+    nmcli above lists connection NAMES and UUIDs only — no key material.
+    If you want secrets in a backup, encrypt the backup rather than
+    widening this script:
+
+      doas tar -C /etc -c NetworkManager/system-connections \
+        | age -p > ~/Backups/Misc/nm-secrets.tar.age
