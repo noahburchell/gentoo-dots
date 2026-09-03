@@ -1,0 +1,38 @@
+alias sudo='doas'
+alias man='man --html=firefox'
+
+bindkey -v
+
+SPROMPT='zsh: correct %B%F{red}%R%f%b to %B%F{green}%r%f%b [%Bnyae%b]? '
+
+# zstyle ':prompt:grml:*:items:user' pre  '[%B%F{blue}'
+zstyle ':prompt:grml:*:items:path' pre  '%B%F{15}'
+zstyle ':prompt:grml:*:items:path' post $'%f%b'
+
+# zstyle ':prompt:grml:*:items:percent' token '❯ '
+# zstyle ':prompt:grml:*:items:percent' token '$ '
+
+HISTFILE=~/.zsh_history
+HISTSIZE=100000
+SAVEHIST=100000
+
+setopt SHARE_HISTORY
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_REDUCE_BLANKS
+setopt APPEND_HISTORY
+setopt INC_APPEND_HISTORY
+setopt EXTENDED_HISTORY
+export PATH="$HOME/.local/bin:$PATH"
+
+alias ask='claude --settings ~/.claude/headless.json \
+  --safe-mode \
+  --effort low \
+  --tools "" \
+  --no-session-persistence \
+  --append-system-prompt-file ~/.claude/ask.md \
+  -p'
+
+alias askk='claude --settings ~/.claude/headless.json \
+  --safe-mode --model haiku --tools "" --no-session-persistence \
+  --append-system-prompt-file ~/.claude/ask.md -p'
