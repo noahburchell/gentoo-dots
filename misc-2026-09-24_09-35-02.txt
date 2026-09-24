@@ -1,143 +1,87 @@
 # Misc system snapshot
 # host      : lychee
-# taken     : 2026-09-03T19:32:59+09:30
-# kernel    : 7.1.6-lychee
+# taken     : 2026-09-24T09:35:05+09:30
+# kernel    : 7.3.0-rc3-lychee
 # script    : /home/nburch/Scripts/snapshot-system.sh
 
 
 ════════════════════════════════════════════════════════════════════
-  SERVICES (OpenRC)
+  SERVICES (ninit)
 ════════════════════════════════════════════════════════════════════
 
 
-──── $ rc-update show -v
-               agetty |                                        
-               binfmt | boot                                   
-             bootlogd |                                        
-             bootmisc | boot                                   
-        busybox-crond |                                        
-         busybox-ntpd |                                        
-     busybox-watchdog |                                        
-              cgroups |                                 sysinit
-              chronyd |      default                           
-          consolefont |                                        
-             cpupower |      default                           
-               cronie |      default                           
-                cupsd |                                        
-                 dbus |      default                           
-                devfs |                                 sysinit
-        device-mapper |                                        
-               dhcpcd |      default                           
-      display-manager |      default                           
- display-manager-setup |                                        
-              dmcrypt |                                        
-                dmesg |                                 sysinit
-              elogind | boot                                   
-           fancontrol |                                        
-                 fsck | boot                                   
-                 fuse |                                        
-           git-daemon |                                        
-             hostname | boot                                   
-              hwclock | boot                                   
-            ip6tables |                                        
-             iptables |                                        
-              keymaps | boot                                   
-            killprocs |                        shutdown        
-    kmod-static-nodes |                                 sysinit
-           lm_sensors |                                        
-                local |      default nonetwork                 
-           localmount | boot                                   
-             loopback | boot                                   
-             minidlna |                                        
-              modules | boot                                   
-        modules-mount |                                 sysinit
-             mount-ro |                        shutdown        
-                 mtab | boot                                   
-           net-online |                                        
-             netmount |                                        
-              numlock |                                        
-              osclock |                                        
-              pciparm |                                        
- power-profiles-daemon |                                        
-               procfs | boot                                   
-           pydoc-3.14 |                                        
-                 root | boot                                   
-               rsyncd |                                        
-             runsvdir |                                        
-            s6-svscan |                                        
-         save-keymaps | boot                                   
-    save-termencoding | boot                                   
-            savecache |                        shutdown        
-              seedrng | boot                                   
-                 sshd |                                        
-                 swap | boot                                   
-              swclock |                                        
-   switcheroo-control |                                        
-               sysctl | boot                                   
-                sysfs |                                 sysinit
-             sysklogd |      default                           
- systemd-tmpfiles-setup | boot                                   
- systemd-tmpfiles-setup-dev |                                 sysinit
-         termencoding | boot                                   
-                 udev |                                 sysinit
-          udev-settle |                                        
-         udev-trigger |                                 sysinit
-                 user |                                        
-          user.nburch |                                        
-            user.noah |                                        
-                  xdm |                                        
+──── $ ninitctl show
+depgraph  /etc/ninit.d/depgraph
+29 services, 36 edges, 6 roots, 7 levels, 5228 bytes, crc 5ef1a88b
 
-──── $ rc-status -a
-Runlevel: sysinit
- devfs                                                             [  started  ]
- kmod-static-nodes                                                 [  started  ]
- systemd-tmpfiles-setup-dev                                        [  started  ]
- sysfs                                                             [  started  ]
- udev                                                              [  started  ]
- modules-mount                                                     [  started  ]
- dmesg                                                             [  started  ]
- udev-trigger                                                      [  started  ]
- cgroups                                                           [  started  ]
-Runlevel: boot
- hwclock                                                           [  started  ]
- modules                                                           [  started  ]
- fsck                                                              [  started  ]
- root                                                              [  started  ]
- mtab                                                              [  started  ]
- swap                                                              [  started  ]
- localmount                                                        [  started  ]
- systemd-tmpfiles-setup                                            [  started  ]
- sysctl                                                            [  started  ]
- bootmisc                                                          [  started  ]
- hostname                                                          [  started  ]
- elogind                                                           [  started  ]
- termencoding                                                      [  started  ]
- seedrng                                                           [  started  ]
- save-termencoding                                                 [  started  ]
- keymaps                                                           [  started  ]
- save-keymaps                                                      [  started  ]
- procfs                                                            [  started  ]
- binfmt                                                            [  started  ]
- loopback                                                          [  started  ]
-Runlevel: default
- dbus                                                              [  started  ]
- chronyd                                                           [  started  ]
- sysklogd                                                          [  started  ]
- cronie                                                            [  started  ]
- display-manager                                                   [  started  ]
- cpupower                                                          [  started  ]
- dhcpcd                                                            [  started  ]
- local                                                             [  started  ]
-Runlevel: nonetwork
- local                                                             [  started  ]
-Runlevel: shutdown
- killprocs                                                         [  stopped  ]
- savecache                                                         [  stopped  ]
- mount-ro                                                          [  stopped  ]
-Dynamic Runlevel: hotplugged
-Dynamic Runlevel: needed/wanted
- display-manager-setup                                             [  started  ]
-Dynamic Runlevel: manual
+  #  service       type     lvl  kills  onfail  rdy  rst  depends on
+  -----------------------------------------------------------------------
+  0  fs            oneshot    1     22  shell     -    -  -
+  1  hostname      oneshot    1      6  stop      -    -  -
+  2  keymaps       oneshot    1      6  stop      -    -  -
+  3  loopback      oneshot    1      2  stop      -    -  -
+  4  binfmt        oneshot    1      0  warn      -    -  -
+  5  hwclock       oneshot    1      0  warn      -    -  -
+  6  tmpfiles-dev  oneshot    2     10  stop      -    -  fs
+  7  modules-load  oneshot    2      7  stop      -    -  fs
+  8  mounts        oneshot    2     10  shell     -    -  fs
+  9  udev          daemon     3      9  stop      3  yes  tmpfiles-dev
+ 10  sysctl        oneshot    3      6  stop      -    -  modules-load
+ 11  tmpfiles      oneshot    3      6  stop      -    -  mounts
+ 12  udev-trigger  oneshot    4      6  stop      -    -  udev
+ 13  basic         target     5      5  stop      -    -  hostname keymaps mounts sysctl tmpfiles udev-trigger
+ 14  dbus          daemon     2      3  stop      3  yes  fs
+ 15  elogind       daemon     4      1  stop      3  yes  udev dbus
+ 16  firewall      oneshot    2      1  stop      -    -  loopback
+ 17  gpu           oneshot    2      1  stop      -    -  fs
+ 18  virtlockd     daemon     6      1  stop      3  yes  basic
+ 19  virtlogd      daemon     6      1  stop      3  yes  basic
+ 20  chronyd       daemon     2      0  warn      -  yes  fs
+ 21  dhcpcd        daemon     4      0  warn      3  yes  loopback udev firewall
+ 22  getty1        daemon     3      0  warn      -  yes  mounts
+ 23  getty2        daemon     3      0  warn      -  yes  mounts
+ 24  libvirtd      daemon     7      0  warn      3  yes  basic dbus virtlockd virtlogd
+ 25  sddm          daemon     6      0  warn      -  yes  basic elogind gpu
+ 26  sshd          daemon     6      0  warn      -  yes  basic
+ 27  swap          oneshot    3      0  warn      -    -  mounts
+ 28  sysklogd      daemon     2      0  warn      -  yes  fs
+
+deepest dependency chain (7 services)
+  fs -> tmpfiles-dev -> udev -> udev-trigger -> basic -> virtlockd -> libvirtd
+
+──── $ ls /etc/ninit.d/
+basic
+binfmt
+chronyd
+dbus
+depgraph
+depgraph.old
+dhcpcd
+elogind
+firewall
+fs
+getty1
+getty2
+gpu
+hostname
+hwclock
+keymaps
+libvirtd
+loopback
+modules-load
+mounts
+sddm
+sshd
+swap
+sysctl
+sysklogd
+tmpfiles
+tmpfiles-dev
+udev
+udev-trigger
+unused
+virtlockd
+virtlogd
 
 
 ════════════════════════════════════════════════════════════════════
@@ -146,70 +90,65 @@ Dynamic Runlevel: manual
 
 
 ──── $ lsblk -f
-NAME        FSTYPE  FSVER            LABEL                      UUID                                 FSAVAIL FSUSE% MOUNTPOINTS
-sda                                                                                                                 
-├─sda1      vfat    FAT32                                       99D2-E6C5                                           
-└─sda2      ext4    1.0              Nix                        404637ea-bfd4-4153-a56e-6abacea252e6  220.8G     0% /run/media/noah/Nix
-sdb         iso9660 Joliet Extension nixos-minimal-26.05-x86_64 1980-01-01-00-00-00-00                              
-├─sdb1      iso9660 Joliet Extension nixos-minimal-26.05-x86_64 1980-01-01-00-00-00-00                              
-└─sdb2      vfat    FAT12            EFIBOOT                    1234-5678                                           
-nvme0n1                                                                                                             
-├─nvme0n1p1 vfat    FAT32                                       76B3-9106                                 2G     2% /boot
-└─nvme0n1p2 btrfs                    gentoo                     c1765e1d-0265-4699-94ce-31099ee30e29  473.9G    74% /swap
-                                                                                                                    /var/tmp/portage
-                                                                                                                    /home
-                                                                                                                    /usr/lib/modules
-                                                                                                                    /
+NAME        FSTYPE FSVER LABEL  UUID                                 FSAVAIL FSUSE% MOUNTPOINTS
+sda                                                                                 
+├─sda1      vfat   FAT32        99D2-E6C5                                           
+└─sda2      ext4   1.0   Ignite 404637ea-bfd4-4153-a56e-6abacea252e6                
+nvme0n1                                                                             
+├─nvme0n1p1 vfat   FAT32        76B3-9106                                 2G     1% /boot
+└─nvme0n1p2 btrfs        gentoo c1765e1d-0265-4699-94ce-31099ee30e29  667.7G    64% /swap
+                                                                                    /var/tmp/portage
+                                                                                    /home
+                                                                                    /
 
 ──── $ blkid
 /dev/nvme0n1p1: UUID="76B3-9106" BLOCK_SIZE="512" TYPE="vfat" PARTUUID="c02425ec-ff14-4dc0-8999-5b799f8f38fe"
 /dev/nvme0n1p2: LABEL="gentoo" UUID="c1765e1d-0265-4699-94ce-31099ee30e29" UUID_SUB="7f119889-5ee6-4761-a2b3-fb0cab1cb789" BLOCK_SIZE="4096" TYPE="btrfs" PARTUUID="168ebf8f-0d2d-4ca0-be3a-8216307cb6ba"
+/dev/sda2: LABEL="Ignite" UUID="404637ea-bfd4-4153-a56e-6abacea252e6" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="c98871a8-e81b-4d72-9b0b-9fe63886169c"
+/dev/sda1: UUID="99D2-E6C5" BLOCK_SIZE="512" TYPE="vfat" PARTUUID="5c48b86b-c477-48f6-9e5e-540b5a43b4da"
 
 ──── $ findmnt --real
-TARGET                SOURCE                           FSTYPE OPTIONS
-/                     /dev/nvme0n1p2[/@]               btrfs  rw,noatime,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=494,subvol=/@
-├─/run/media/noah/Nix /dev/sda2                        ext4   rw,nosuid,nodev,relatime,errors=remount-ro
-├─/usr/lib/modules    /dev/nvme0n1p2[/@modules]        btrfs  rw,noatime,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=504,subvol=/@modules
-├─/home               /dev/nvme0n1p2[/@home]           btrfs  rw,noatime,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=257,subvol=/@home
-├─/var/tmp/portage    /dev/nvme0n1p2[/@gentoo-portage] btrfs  rw,noatime,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=483,subvol=/@gentoo-portage
-├─/swap               /dev/nvme0n1p2[/@swap]           btrfs  rw,noatime,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=491,subvol=/@swap
-└─/boot               /dev/nvme0n1p1                   vfat   rw,noatime,fmask=0133,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,utf8,errors=remount-ro
+TARGET             SOURCE                           FSTYPE OPTIONS
+/                  /dev/nvme0n1p2[/@]               btrfs  rw,noatime,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=494,subvol=/@
+├─/home            /dev/nvme0n1p2[/@home]           btrfs  rw,noatime,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=257,subvol=/@home
+├─/var/tmp/portage /dev/nvme0n1p2[/@gentoo-portage] btrfs  rw,noatime,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=483,subvol=/@gentoo-portage
+├─/swap            /dev/nvme0n1p2[/@swap]           btrfs  rw,noatime,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=491,subvol=/@swap
+└─/boot            /dev/nvme0n1p1                   vfat   rw,noatime,fmask=0133,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,utf8,errors=remount-ro
 
 ──── $ btrfs subvolume list / (as doas)
-ID 257 gen 70193 top level 5 path @home
-ID 483 gen 69855 top level 5 path @gentoo-portage
+ID 257 gen 99808 top level 5 path @home
+ID 483 gen 99342 top level 5 path @gentoo-portage
 ID 491 gen 50152 top level 5 path @swap
-ID 494 gen 70193 top level 5 path @
-ID 495 gen 69673 top level 494 path srv
-ID 501 gen 55805 top level 5 path @ignite
-ID 504 gen 62824 top level 5 path @modules
+ID 494 gen 99808 top level 5 path @
+ID 495 gen 91999 top level 494 path srv
 
 ──── $ btrfs filesystem usage / (as doas)
+WARNING: failed to get device size for /dev/root: No such file or directory
 Overall:
     Device size:		   1.82TiB
-    Device allocated:		   1.41TiB
-    Device unallocated:		 419.95GiB
-    Device missing:		     0.00B
-    Device slack:		   3.50KiB
-    Used:			   1.35TiB
-    Free (estimated):		 473.95GiB	(min: 263.97GiB)
-    Free (statfs, df):		 473.94GiB
+    Device allocated:		   1.27TiB
+    Device unallocated:		 563.95GiB
+    Device missing:		   1.82TiB
+    Device slack:		     0.00B
+    Used:			   1.16TiB
+    Free (estimated):		 667.71GiB	(min: 385.74GiB)
+    Free (statfs, df):		 667.71GiB
     Data ratio:			      1.00
     Metadata ratio:		      2.00
     Global reserve:		 512.00MiB	(used: 0.00B)
     Multiple profiles:		        no
 
-Data,single: Size:1.40TiB, Used:1.34TiB (96.23%)
-   /dev/nvme0n1p2	   1.40TiB
+Data,single: Size:1.26TiB, Used:1.16TiB (91.94%)
+   /dev/root	   1.26TiB
 
-Metadata,DUP: Size:5.00GiB, Used:3.72GiB (74.34%)
-   /dev/nvme0n1p2	  10.00GiB
+Metadata,DUP: Size:5.00GiB, Used:3.57GiB (71.41%)
+   /dev/root	  10.00GiB
 
 System,DUP: Size:32.00MiB, Used:192.00KiB (0.59%)
-   /dev/nvme0n1p2	  64.00MiB
+   /dev/root	  64.00MiB
 
 Unallocated:
-   /dev/nvme0n1p2	 419.95GiB
+   /dev/root	 563.95GiB
 
 ──── $ swapon --show
 NAME           TYPE SIZE USED PRIO
@@ -239,29 +178,17 @@ sector-size: 512
 /dev/sda1 : start=        2048, size=     2097152, type=C12A7328-F81F-11D2-BA4B-00A0C93EC93B, uuid=5C48B86B-C477-48F6-9E5E-540B5A43B4DA
 /dev/sda2 : start=     2099200, size=   498018304, type=0FC63DAF-8483-4772-8E79-3D69D8477DE4, uuid=C98871A8-E81B-4D72-9B0B-9FE63886169C
 
-──── $ sfdisk -d /dev/sdb (as doas)
-label: dos
-label-id: 0x9fb6382f
-device: /dev/sdb
-unit: sectors
-sector-size: 512
-
-/dev/sdb1 : start=           0, size=     3335808, type=0, bootable
-/dev/sdb2 : start=         284, size=        6144, type=ef
-
 ──── $ df -h
 Filesystem      Size  Used Avail Use% Mounted on
-/dev/nvme0n1p2  1.9T  1.4T  474G  75% /
-devtmpfs         10M     0   10M   0% /dev
-tmpfs           6.2G  1.5M  6.2G   1% /run
-shm              16G   18M   16G   1% /dev/shm
-/dev/nvme0n1p2  1.9T  1.4T  474G  75% /usr/lib/modules
-/dev/nvme0n1p2  1.9T  1.4T  474G  75% /home
-/dev/nvme0n1p2  1.9T  1.4T  474G  75% /var/tmp/portage
-/dev/nvme0n1p2  1.9T  1.4T  474G  75% /swap
-/dev/nvme0n1p1  2.0G   47M  2.0G   3% /boot
-tmpfs           3.1G   80K  3.1G   1% /run/user/1000
-/dev/sda2       233G   36K  221G   1% /run/media/noah/Nix
+/dev/root       1.9T  1.2T  668G  65% /
+devtmpfs         16G     0   16G   0% /dev
+run              16G  1.3M   16G   1% /run
+shm              16G     0   16G   0% /dev/shm
+/dev/root       1.9T  1.2T  668G  65% /home
+/dev/root       1.9T  1.2T  668G  65% /var/tmp/portage
+/dev/root       1.9T  1.2T  668G  65% /swap
+/dev/nvme0n1p1  2.0G   25M  2.0G   2% /boot
+tmpfs           3.1G   24K  3.1G   1% /run/user/1000
 
 
 ════════════════════════════════════════════════════════════════════
@@ -323,24 +250,22 @@ tmpfs           3.1G   80K  3.1G   1% /run/user/1000
 ──── $ lsusb
 Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
 Bus 001 Device 002: ID 3434:1210 Keychron Keychron Q1 Ultra 8K
-Bus 001 Device 003: ID 13fe:4300 Phison Electronics Corp. USB DISK 2.0
-Bus 001 Device 004: ID 174c:2074 ASMedia Technology Inc. ASM1074 High-Speed hub
-Bus 001 Device 005: ID 0e8d:0616 MediaTek Inc. Wireless_Device
-Bus 001 Device 006: ID 2972:0120 FiiO Electronics Technology FIIO K13 R2R
-Bus 001 Device 007: ID 0db0:0076 Micro Star International MYSTIC LIGHT 
+Bus 001 Device 003: ID 174c:2074 ASMedia Technology Inc. ASM1074 High-Speed hub
+Bus 001 Device 004: ID 0e8d:0616 MediaTek Inc. Wireless_Device
+Bus 001 Device 005: ID 2972:0120 FiiO Electronics Technology FIIO K13 R2R
+Bus 001 Device 006: ID 0db0:0076 Micro Star International MYSTIC LIGHT 
 Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
 Bus 002 Device 002: ID 174c:3074 ASMedia Technology Inc. ASM1074 SuperSpeed hub
 Bus 003 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
 Bus 003 Device 002: ID 046d:c54d Logitech, Inc. USB Receiver
 Bus 004 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
 Bus 005 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
-Bus 005 Device 002: ID 8089:0009 SayoDevice SayoDevice O3C
 Bus 006 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
 Bus 007 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
 
 ──── $ free -h
                total        used        free      shared  buff/cache   available
-Mem:            30Gi       4.0Gi        11Gi       195Mi        16Gi        26Gi
+Mem:            30Gi       5.1Gi       7.3Gi       163Mi        18Gi        25Gi
 Swap:           15Gi          0B        15Gi
 
 ──── $ lscpu
@@ -360,7 +285,7 @@ Socket(s):                               1
 Stepping:                                0
 Microcode version:                       0xb404038
 Frequency boost:                         enabled
-CPU(s) scaling MHz:                      60%
+CPU(s) scaling MHz:                      72%
 CPU max MHz:                             5486.4409
 CPU min MHz:                             627.9670
 BogoMIPS:                                7799.98
@@ -398,11 +323,13 @@ Vulnerability Vmscape:                   Vulnerable
 
 ──── $ ip -brief addr
 lo               UNKNOWN        127.0.0.1/8 ::1/128 
-enp8s0           UP             10.10.10.10/24 fe80::50e9:4de2:2249:71d0/64 
+enp8s0           UP             192.168.1.2/24 fe80::50e9:4de2:2249:71d0/64 
+virbr0           DOWN           192.168.122.1/24 
 
 ──── $ ip route
-default via 10.10.10.1 dev enp8s0 src 10.10.10.10 metric 1002 
-10.10.10.0/24 dev enp8s0 proto dhcp scope link src 10.10.10.10 metric 1002 
+default via 192.168.1.1 dev enp8s0 proto dhcp src 192.168.1.2 metric 1002 
+192.168.1.0/24 dev enp8s0 proto dhcp scope link src 192.168.1.2 metric 1002 
+192.168.122.0/24 dev virbr0 proto kernel scope link src 192.168.122.1 linkdown 
 
 ──── $ nmcli -f NAME,UUID,TYPE,DEVICE con show
     [nmcli not installed]
@@ -457,7 +384,6 @@ UUID=c1765e1d-0265-4699-94ce-31099ee30e29  /var/tmp/portage  btrfs  noatime,noda
 UUID=c1765e1d-0265-4699-94ce-31099ee30e29  /swap             btrfs  noatime,nodatacow,ssd,discard=async,space_cache=v2,subvol=/@swap                   0 0
 #/swap/swapfile                             none              swap   defaults                                                                           0 0
 UUID=76B3-9106                             /boot             vfat   noatime,fmask=0133,dmask=0022                                                  0 2
-UUID=c1765e1d-0265-4699-94ce-31099ee30e29  /usr/lib/modules  btrfs  noauto,subvol=@modules,noatime,compress=zstd  0 0
 
 ──── /etc/locale.gen ─────────────────────────────────────────────
 # This file defines which locales to incorporate into the glibc locale archive.
@@ -791,46 +717,21 @@ en_AU.UTF-8 UTF-8
 # zu_ZA            # Zulu (South Africa)
 
 ──── /etc/locale.conf ────────────────────────────────────────────
-    [absent]
+LANG=en_AU.UTF-8
+
 
 ──── /etc/hosts ──────────────────────────────────────────────────
-# /etc/hosts: Local Host Database
-#
-# This file describes a number of aliases-to-address mappings for the for 
-# local hosts that share this file.
-#
-# The format of lines in this file is:
-#
-# IP_ADDRESS	canonical_hostname	[aliases...]
-#
-#The fields can be separated by any number of spaces or tabs.
-#
-# In the presence of the domain name service or NIS, this file may not be 
-# consulted at all; see /etc/host.conf for the resolution order.
-#
+# /etc/hosts
 
-# IPv4 and IPv6 localhost aliases
-127.0.0.1	lychee.nburch.org lychee localhost
-::1		localhost
+127.0.0.1    localhost
+::1          localhost
 
-#
-# Imaginary network.
-#10.0.0.2               myname
-#10.0.0.3               myfriend
-#
-# According to RFC 1918, you can use the following IP networks for private 
-# nets which will never be connected to the Internet:
-#
-#       10.0.0.0        -   10.255.255.255
-#       172.16.0.0      -   172.31.255.255
-#       192.168.0.0     -   192.168.255.255
-#
-# In case you want to be able to connect directly to the Internet (i.e. not 
-# behind a NAT, ADSL router, etc...), you need real official assigned 
-# numbers.  Do not try to invent your own network numbers but instead get one 
-# from your network provider (if any) or from your regional registry (ARIN, 
-# APNIC, LACNIC, RIPE NCC, or AfriNIC.)
-#
+127.0.0.1    lychee.nburch.org lychee 
+::1          lychee.nburch.org lychee
+
+192.168.1.3  lemon.nburch.org  lemon
+192.168.1.4  mango.nburch.org  mango
+192.168.1.5  banana.nburch.org banana
 
 ──── /etc/hostname ───────────────────────────────────────────────
 lychee
@@ -1165,69 +1066,7 @@ rc_tty_number=12
 #rc_send_sigkill="YES"
 
 ──── /etc/inittab ────────────────────────────────────────────────
-#
-# /etc/inittab:  This file describes how the INIT process should set up
-#                the system in a certain run-level.
-#
-# Author:  Miquel van Smoorenburg, <miquels@cistron.nl>
-# Modified by:  Patrick J. Volkerding, <volkerdi@ftp.cdrom.com>
-# Modified by:  Daniel Robbins, <drobbins@gentoo.org>
-# Modified by:  Martin Schlemmer, <azarah@gentoo.org>
-# Modified by:  Mike Frysinger, <vapier@gentoo.org>
-# Modified by:  Robin H. Johnson, <robbat2@gentoo.org>
-# Modified by:  William Hubbs, <williamh@gentoo.org>
-# Modified by:  Lars Wendler, <polynomial-c@gentoo.org>
-# Modified by:  Aisha Tammy, <gentoo@aisha.cc>
-#
-
-# Default runlevel.
-id:3:initdefault:
-
-# System initialization, mount local filesystems, etc.
-si::sysinit:/sbin/openrc sysinit
-
-# Further system initialization, brings up the boot runlevel.
-rc::bootwait:/sbin/openrc boot
-
-l0u:0:wait:/sbin/telinit u
-l0:0:wait:/sbin/openrc shutdown
-l0s:0:wait:/sbin/halt.sh
-l1:1:wait:/sbin/openrc single
-l2:2:wait:/sbin/openrc nonetwork
-l3:3:wait:/sbin/openrc default
-l4:4:wait:/sbin/openrc default
-l5:5:wait:/sbin/openrc default
-l6u:6:wait:/sbin/telinit u
-l6:6:wait:/sbin/openrc reboot
-l6r:6:wait:/sbin/reboot -dkn
-#z6:6:respawn:/sbin/sulogin
-
-# new-style single-user
-su0:S:wait:/sbin/openrc single
-su1:S:wait:/sbin/sulogin
-
-# TERMINALS
-#x1:12345:respawn:/sbin/agetty 38400 console linux
-c1:12345:respawn:/sbin/agetty --noclear 38400 tty1 linux
-c2:2345:respawn:/sbin/agetty 38400 tty2 linux
-c3:2345:respawn:/sbin/agetty 38400 tty3 linux
-c4:2345:respawn:/sbin/agetty 38400 tty4 linux
-c5:2345:respawn:/sbin/agetty 38400 tty5 linux
-c6:2345:respawn:/sbin/agetty 38400 tty6 linux
-
-# SERIAL CONSOLES
-#s0:12345:respawn:/sbin/agetty -L 115200 ttyS0 vt100
-#s1:12345:respawn:/sbin/agetty -L 115200 ttyS1 vt100
-
-# What to do at the "Three Finger Salute".
-ca:12345:ctrlaltdel:/sbin/shutdown -r now
-
-# Used by /etc/init.d/display-manager to control DM startup.
-# Read the comments in /etc/init.d/display-manager for more
-# info. Do NOT remove, as this will start nothing
-# extra at boot if /etc/init.d/display-manager is not added
-# to the "default" runlevel.
-x:a:once:/usr/bin/startDM
+    [absent]
 
 ──── /etc/security/limits.conf ───────────────────────────────────
     [absent]
@@ -1235,8 +1074,48 @@ x:a:once:/usr/bin/startDM
 ──── /etc/vconsole.conf ──────────────────────────────────────────
     [absent]
 
-──── /home/nburch/.zshrc ─────────────────────────────────────────
-# Created by newuser for 5.
+──── /home/nburch/.zshrc.local ───────────────────────────────────
+alias sudo='doas'
+alias please='doas'
+
+compdef _files git
+
+typeset -gU path
+path=(~/Scripts ~/.local/bin $path)
+
+SPROMPT='zsh: correct %B%F{red}%R%f%b to %B%F{green}%r%f%b [%Bnyae%b]? '
+
+HISTFILE=~/.zsh_history
+HISTSIZE=100000
+SAVEHIST=100000
+
+setopt SHARE_HISTORY
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_REDUCE_BLANKS
+setopt APPEND_HISTORY
+setopt EXTENDED_HISTORY
+
+alias ask='noglob claude --settings ~/.claude/headless.json \
+  --safe-mode \
+  --effort low \
+  --tools "" \
+  --no-session-persistence \
+  --append-system-prompt-file ~/.claude/ask.md \
+  -p'
+
+alias askk='noglob claude --settings ~/.claude/headless.json \
+  --safe-mode --model haiku --tools "" --no-session-persistence \
+  --append-system-prompt-file ~/.claude/ask.md -p'
+
+for k in "${terminfo[kcuu1]}" '^[[A' '^[OA'; do bindkey "$k" up-history; done
+for k in "${terminfo[kcud1]}" '^[[B' '^[OB'; do bindkey "$k" down-history; done
+
+export EDITOR=nvim
+export VISUAL=nvim
+export MANPAGER='nvim +Man!'   # man pages open in nvim, with links and search
+alias vi=nvim
+alias vim=nvim
 
 ──── /home/nburch/.zshenv ────────────────────────────────────────
     [absent]
@@ -1247,8 +1126,13 @@ x:a:once:/usr/bin/startDM
 [user]
 	email = noah@nburch.org
 	name = Noah Burchell
+	signingkey = /home/nburch/.ssh/id_ed25519.pub
 [pull]
 	rebase = false
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	allowedSignersFile = /home/nburch/.config/git/allowed_signers
 
 ──── /home/nburch/.vimrc ─────────────────────────────────────────
     [empty]
@@ -1258,40 +1142,6 @@ x:a:once:/usr/bin/startDM
   CONFIG DIRECTORIES
 ════════════════════════════════════════════════════════════════════
 
-
-──── /etc/conf.d/agetty ──────────────────────────────────────────
-# make agetty quiet
-#quiet="yes"
-
-# Set the baud rate of the terminal line
-#baud=""
-
-# set the terminal type
-#term_type="linux"
-
-# extra options to pass to agetty for this port
-#agetty_options=""
-
-──── /etc/conf.d/bootlogd ────────────────────────────────────────
-# Put your bootlog options into this
-#BOOTLOGD_ARGS="-l /var/log/boot"
-
-──── /etc/conf.d/bootmisc ────────────────────────────────────────
-# List of /tmp directories we should clean up
-clean_tmp_dirs="/tmp"
-
-# Should we wipe the tmp paths completely or just selectively remove known
-# locks / files / etc... ?
-wipe_tmp="YES"
-
-# Write the initial dmesg log into /var/log/dmesg after boot
-# This may be useful if you need the kernel boot log afterwards
-log_dmesg="YES"
-
-# Save the previous dmesg log to dmesg.old
-# This may be useful if you need to compare the current boot to the
-# previous one.
-#previous_dmesg=no
 
 ──── /etc/conf.d/busybox-crond ───────────────────────────────────
 # Config file for /etc/init.d/busybox-crond
@@ -1330,25 +1180,10 @@ CFGFILE="/etc/chrony/chrony.conf"
 
 ARGS=" -u ntp -F 2"
 
-──── /etc/conf.d/consolefont ─────────────────────────────────────
-# The consolefont service is not activated by default. If you need to
-# use it, you should run "rc-update add consolefont boot" as root.
-#
-# consolefont specifies the default font that you'd like Linux to use on the
-# console.  You can find a good selection of fonts in /usr/share/consolefonts;
-# you shouldn't specify the trailing ".psf.gz", just the font name below.
-# To use the default console font, comment out the CONSOLEFONT setting below.
-consolefont="default8x16"
-
-# consoletranslation is the charset map file to use.  Leave commented to use
-# the default one.  Have a look in /usr/share/consoletrans for a selection of
-# map files you can use.
-#consoletranslation="8859-1_to_uni"
-
-# unicodemap is the unicode map file to use. Leave commented to use the
-# default one. Have a look in /usr/share/unimaps for a selection of map files
-# you can use.
-#unicodemap="iso01"
+──── /etc/conf.d/containerd ──────────────────────────────────────
+# This is the delay to be used in the start_post function to wait for
+# the socket to be active.
+#containerd_socket_delay=5
 
 ──── /etc/conf.d/cpupower ────────────────────────────────────────
 # /etc/conf.d/cpupower: config file for /etc/init.d/cpupower
@@ -1392,16 +1227,6 @@ STOP_OPTS=""
 # Settings for the CRON daemon.
 # CRONDARGS= :  any extra command-line startup arguments for crond
 CRONDARGS=
-
-──── /etc/conf.d/devfs ───────────────────────────────────────────
-# OpenRC will attempt each of the following in succession to mount /dev.
-#
-# 1. If there is an entry for /dev in fstab, it will be used.
-# 2. If devtmpfs is defined in the kernel, it will be used.
-# 3. If tmpfs is defined in the kernel, it will be used.
-#
-# Set this to yes if you do not want OpenRC to attempt to mount /dev.
-# skip_mount_dev="NO"
 
 ──── /etc/conf.d/device-mapper ───────────────────────────────────
 RC_AFTER="lvm"
@@ -1532,10 +1357,66 @@ dmcrypt_retries=5
 
 # The file must be terminated by a newline.  Or leave this comment last.
 
-──── /etc/conf.d/dmesg ───────────────────────────────────────────
-# Sets the level at which logging of messages is done to the
-# console.  See dmesg(1) for more info.
-dmesg_level="1"
+──── /etc/conf.d/dnsmasq ─────────────────────────────────────────
+# /etc/conf.d/dnsmasq: config file for /etc/init.d/dnsmasq
+
+# See the dnsmasq(8) man page for possible options to put here.
+DNSMASQ_OPTS="--user=dnsmasq --group=dnsmasq"
+
+──── /etc/conf.d/docker ──────────────────────────────────────────
+# /etc/conf.d/docker: config file for /etc/init.d/docker
+
+# where the docker daemon output gets piped
+# this contains both stdout and stderr. If  you need to separate them,
+# see the settings below
+#DOCKER_LOGFILE="/var/log/docker.log"
+
+# where the docker daemon stdout gets piped
+# if this is not set, DOCKER_LOGFILE is used
+#DOCKER_OUTFILE="/var/log/docker-out.log"
+
+# where the docker daemon stderr gets piped
+# if this is not set, DOCKER_LOGFILE is used
+#DOCKER_ERRFILE="/var/log/docker-err.log"
+
+# where docker's pid get stored
+#DOCKER_PIDFILE="/run/docker.pid"
+
+# Settings for process limits (ulimit)
+#DOCKER_ULIMIT="-c unlimited -n 524288 -u unlimited"
+
+# seconds to wait for sending SIGTERM and SIGKILL signals when stopping docker
+#DOCKER_RETRY="TERM/60/KILL/10"
+
+# where the docker daemon itself is run from
+#DOCKERD_BINARY="/usr/bin/dockerd"
+
+# containerd service name
+#CONTAINERD_SVC="containerd"
+
+# any other random options you want to pass to docker
+DOCKER_OPTS=""
+
+──── /etc/conf.d/ebtables ────────────────────────────────────────
+# /etc/conf.d/ebtables
+
+# Location in which ebtables initscript will save set rules on 
+# service shutdown
+EBTABLES_SAVE="/var/lib/ebtables/rules-save"
+
+# Options to pass to ebtables-save and ebtables-restore 
+SAVE_RESTORE_OPTIONS=""
+
+# Save state on stopping ebtables
+SAVE_ON_STOP="yes"
+
+# If you need to log iptables messages as soon as iptables starts,
+# AND your logger does NOT depend on the network, then you may wish
+# to uncomment the next line.
+# If your logger depends on the network, and you uncomment this line
+# you will create an unresolvable circular dependency during startup.
+# After commenting or uncommenting this line, you must run 'rc-update -u'.
+#rc_use="logger"
 
 ──── /etc/conf.d/elogind ─────────────────────────────────────────
 # /etc/conf.d/elogind: config file for /etc/init.d/elogind
@@ -1564,48 +1445,6 @@ ELOGIND_PIDFILE="/run/elogind.pid"
 # per default) when you are stopping the service.
 #FANCONTROL_TERMTIMEOUT="TERM/60/KILL/5"
 
-──── /etc/conf.d/fsck ────────────────────────────────────────────
-# Pass any arguments to fsck.
-# By default we preen.
-# Linux systems also force -C0 and -T.
-# If fsck_args is not specified then Linux systems also use -A
-# (and -R if / is rw)
-#fsck_args="-p"
-
-# We can also specify the passno in /etc/fstab to check
-# If you multiplex fsck (ie ln -s fsck /etc/init.d/fsck.late) then you can
-# do an fsck outside of the normal scope, say for /home.
-# Here are some examples:-
-#fsck_passno="=1 =2"
-#fsck_passno=">1"
-#fsck_passno="<2"
-
-# If passno is not enough granularity, you can also specify mountpoints to
-# check. This should NOT be used for the default non-multiplexed fsck, or your
-# system might not be checked. Additionally, it is mutually exclusive with
-# the fsck_passno setting.
-#fsck_mnt=""
-#fsck_mnt="/home"
-
-# Most modern fs's don't require a full fsck on boot, but for those that do
-# it may be advisable to skip this when running on battery.
-# WARNING: Do not turn this off if you have any JFS partitions.
-fsck_on_battery="YES"
-
-# fsck_shutdown causes fsck to trigger during shutdown as well as startup.
-# The end result of this is that if any periodic non-root filesystem checks are
-# scheduled, under normal circumstances the actual check will happen during
-# shutdown rather than at next boot.
-# This is useful when periodic filesystem checks are causing undesirable
-# delays at startup, but such delays at shutdown are acceptable.
-fsck_shutdown="NO"
-
-# fsck_abort_on_errors can be set to no to cause fsck to not abort on
-# errors.
-# This is useful when periodic filesystem checks are causing undesirable
-# aborts.
-fsck_abort_on_errors="YES"
-
 ──── /etc/conf.d/git-daemon ──────────────────────────────────────
 # conf.d file for git-daemon
 #
@@ -1626,32 +1465,6 @@ GITDAEMON_OPTS="--syslog --base-path=/var/git"
 # your system, esp. not the repositories.
 GIT_USER="nobody"
 GIT_GROUP="nobody"
-
-──── /etc/conf.d/hostname ────────────────────────────────────────
-# Hostname fallback if /etc/hostname does not exist
-hostname="lychee"
-
-──── /etc/conf.d/hwclock ─────────────────────────────────────────
-# Set CLOCK to "UTC" if your Hardware Clock is set to UTC (also known as
-# Greenwich Mean Time).  If that clock is set to the local time, then
-# set CLOCK to "local".  Note that if you dual boot with Windows, then
-# you should set it to "local".
-clock="UTC"
-
-# If you want the hwclock script to set the system time (software clock)
-# to match the current hardware clock during bootup, leave this
-# commented out.
-# However, you can set this to "NO" if you are running a modern kernel
-# and using NTP to synchronize your system clock.
-#clock_hctosys="YES"
-
-# If you do not want to set the hardware clock to the current system
-# time (software clock) during shutdown, set this to no.
-#clock_systohc="YES"
-
-# If you wish to pass any other arguments to hwclock during bootup,
-# you may do so here. Alpha users may wish to use --arc or --srm here.
-clock_args=""
 
 ──── /etc/conf.d/ip6tables ───────────────────────────────────────
 # /etc/conf.d/ip6tables
@@ -1711,61 +1524,101 @@ SAVE_ON_STOP="yes"
 # After commenting or uncommenting this line, you must run 'rc-update -u'.
 #rc_use="logger"
 
-──── /etc/conf.d/keymaps ─────────────────────────────────────────
-# Use keymap to specify the default console keymap.  There is a complete tree
-# of keymaps in /usr/share/keymaps to choose from.
-keymap="us"
+──── /etc/conf.d/libvirtd ────────────────────────────────────────
+# /etc/conf.d/libvirtd
 
-# Should we first load the 'windowkeys' console keymap?  Most x86 users will
-# say "yes" here.  Note that non-x86 users should leave it as "no".
-# Loading this keymap will enable VT switching (like ALT+Left/Right)
-# using the special windows keys on the linux console.
-windowkeys="YES"
+# Startup dependency
+# libvirtd typically requires all networks to be up and settled which
+# is what rc_need="net" provides. However if you only use specific networks
+# for libvirtd, you may override this. Or if you only use libvirtd locally.
+rc_need="net"
 
-# The maps to load for extended keyboards.  Most users will leave this as is.
-extended_keymaps=""
-#extended_keymaps="backspace keypad euro2"
+# The termination timeout (start-stop-daemon parameter "retry") ensures
+# that the service will be terminated within a given time (25 + 5 seconds
+# per default) when you are stopping the service.
+#LIBVIRTD_TERMTIMEOUT="TERM/25/KILL/5"
 
-# Tell dumpkeys(1) to interpret character action codes to be
-# from the specified character set.
-# This only matters if you set unicode="yes" in /etc/rc.conf.
-# For a list of valid sets, run `dumpkeys --help`
-dumpkeys_charset=""
+# LIBVIRTD_OPTS
+# You may want to add '--listen' to have libvirtd listen for tcp/ip connections
+# if you want to use libvirt for remote control
+# Please consult 'libvirtd --help' for more options
+#LIBVIRTD_OPTS="--listen"
 
-# Some fonts map AltGr-E to the currency symbol instead of the Euro.
-# To fix this, set to "yes"
-fix_euro="NO"
+──── /etc/conf.d/libvirt-guests ──────────────────────────────────
+# /etc/conf.d/libvirtd
 
-──── /etc/conf.d/killprocs ───────────────────────────────────────
-# If you wish to pass any options to kill_all during shutdown,
-# you should do so here.
+# LIBVIRT_URIS
+# space separated list of libvirt URIs to communicate with to start/stop guests
+# Valid values are anything that can be passed to 'virsh connect'
+
+#LIBVIRT_URIS="qemu:///system"
+
+
+# LIBVIRT_SHUTDOWN
+# Valid options:
+# * managedsave - Performs a state save external to the VM (for hypervisors
+#                 supporting this operation). qemu-kvm will stop the CPU
+#                 and save off all state to a separate file. When the
+#                 machine is started again, it will resume like nothing
+#                 ever happened. This is guarenteed to always successfully
+#                 stop your machine and restart it.
 #
-# The setting is called killall5_opts because the options here are meant
-# to be identical to those you could pass to killall5.
-killall5_opts=""
+# * shutdown -    Sends an ACPI shutdown (think of this as a request to
+#                 your guest to shutdown). There is no way to distinguish
+#                 between guests that are ignoring the shutdown request or
+#                 are stuck or are taking a long time to shutdown. We will
+#                 wait LIBVIRT_MAXWAIT seconds before yanking the power
+#                 out.
+#
+# * destroy  -    Immediately stop all running guests. Use with caution as
+#                 this can leave the guest in a corrupted state and might
+#                 lead to data loss.
+#
 
-# If you need to delay after each kill attempt during shutdown, set the amount
-# of time you need to delay here. This gets passed directly to sleep in
-# the shell.
-# kill_delay=0
+#LIBVIRT_SHUTDOWN="managedsave"
+
+
+# LIBVIRT_MAXWAIT
+# Timeout in seconds until stopping a guest and "pulling the plug" on the
+# guest
+# Valid values are any integer over 0
+
+#LIBVIRT_MAXWAIT="500"
+
+
+# LIBVIRT_START
+# If this value is set to 'no', then guests and networks that were shutdown
+# by this script when it was stopped will not be started when it is started
+# back up.
+# Valid values are yes or no
+
+#LIBVIRT_START="yes"
+
+
+# LIBVIRT_IGNORE_AUTOSTART
+# If the VM is marked for autostart in its XML configuration then we won't
+# save its start when the init script is stopped. The result is that when
+# the init script starts back up, no attempt will be made to start the VM or
+# confirm it is started.
+# Valid values are yes or no
+
+#LIBVIRT_IGNORE_AUTOSTART="no"
+
+
+# LIBVIRT_NET_SHUTDOWN
+# If libvirtd created networks for you (e.g. NATed networks) then this init
+# script will shut them down for you if this is set to 'yes'. Otherwise,
+# the networks will be left running. For this option to be useful you must
+# have enabled the 'virt-network' USE flag and have had libvirt create a
+# NATed network for you. Valid values: 'yes' or 'no'
+
+#LIBVIRT_NET_SHUTDOWN="yes"
 
 ──── /etc/conf.d/lm_sensors ──────────────────────────────────────
 # /etc/conf.d/lm_sensors
 
 # NOTE:
 # For module loading please use /etc/modules-load.d/lm_sensors.conf
-
-──── /etc/conf.d/localmount ──────────────────────────────────────
-# Stop the unmounting of certain points.
-# This could be useful for some NFS related work.
-#no_umounts="/dir1:/var/dir2"
-#
-# Mark certain mount points as critical.
-# This contains a space separated list of mount points which should be
-# considered critical. If one of these mount points cannot be mounted,
-# localmount will fail.
-# By default, this is empty.
-#critical_mounts="/home /var"
 
 ──── /etc/conf.d/minidlna ────────────────────────────────────────
 # /etc/conf.d/minidlna
@@ -1783,113 +1636,45 @@ RESCAN="false"
 
 # vim: ft=gentoo-conf-d
 
-──── /etc/conf.d/modules ─────────────────────────────────────────
-# Linux users can define a list of modules for a specific kernel version,
-# a released kernel version, a main kernel version or all kernel versions.
-# The most specific versioned variable will take precedence.
-# FreeBSD users can only use the modules="foo bar" setting.
-#modules_2_6_23_gentoo_r5="ieee1394 ohci1394"
-#modules_2_6_23="tun ieee1394"
-#modules_2_6="tun"
-#modules_2="ipv6"
-#modules="ohci1394"
+──── /etc/conf.d/mit-krb5kadmind ─────────────────────────────────
+# Define startup options for Kerberos administration server
+KADMIND_OPTS=""
 
-# Linux users can give the modules some arguments if needed, per version
-# if necessary.
-# Again, the most specific versioned variable will take precedence.
-# This is not supported on FreeBSD.
-#module_ieee1394_args="debug"
-#module_ieee1394_args_2_6_23_gentoo_r5="debug2"
-#module_ieee1394_args_2_6_23="debug3"
-#module_ieee1394_args_2_6="debug4"
-#module_ieee1394_args_2="debug5"
+──── /etc/conf.d/mit-krb5kdc ─────────────────────────────────────
+# Define startup options for Kerberos KDC
+KDC_OPTS=""
 
-# You should consult your kernel documentation and configuration
-# for a list of modules and their options.
+──── /etc/conf.d/mit-krb5kpropd ──────────────────────────────────
+# Define startup options for Kerberos incremental propagation server
+KPROPD_OPTS=""
 
-──── /etc/conf.d/mtab ────────────────────────────────────────────
-# As far as we are aware, there are no modern linux tools or use cases
-# which require /etc/mtab to be a separate file from /proc/self/mounts,
-# so this setting should be commented out.
-# If it is set to yes, please comment it out and run this command:
-# # rc-service mtab restart
-# In the future, the mtab service will be removed since we are not aware
-# of any need to manipulate /etc/mtab as a separate file from
-# /proc/self/mounts.
-# If you have a technical reason we should keep this support, please
-# open an issue at https://github.com/openrc/openrc/issues and let us
-# know about your situation.
-# This setting controls whether /etc/mtab is a file or symbolic link.
-# mtab_is_file=no
+──── /etc/conf.d/nftables ────────────────────────────────────────
+# /etc/conf.d/nftables
 
-──── /etc/conf.d/netmount ────────────────────────────────────────
-# You will need to set the dependencies in the netmount script to match
-# the network configuration tools you are using. This should be done in
-# this file by following the examples below, and not by changing the
-# service script itself.
-#
-# Each of these examples is meant to be used separately. So, for
-# example, do not set rc_need to something like "net.eth0 dhcpcd".
-#
-# If you are using newnet and configuring your interfaces with static
-# addresses with the network script, you  should use this setting.
-#
-#rc_need="network"
-#
-# If you are using oldnet, you must list the specific net.* services you
-# need.
-#
-# This example assumes all of your netmounts can be reached on
-# eth0.
-#
-#rc_need="net.eth0"
-#
-# This example assumes some of your netmounts are on eth1 and some
-# are on eth2.
-#
-#rc_need="net.eth1 net.eth2"
-#
-# If you are using a dynamic network management tool like
-# NetworkManager, dhcpcd in standalone mode, wicd, badvpn-ncd, etc, to
-# manage the network interfaces with the routes to your netmounts, you
-# should list that tool.
-#
-#rc_need="NetworkManager"
-#rc_need="dhcpcd"
-#rc_need="wicd"
-#
-# The default setting is designed to be backward compatible with our
-# current setup, but you are highly discouraged from using this. In
-# other words, please change it to be more suited to your system.
-#
-rc_need="net"
-#
-# Mark certain mount points as critical.
-# This contains aspace separated list of mount points which should be
-# considered critical. If one of these mount points cannot be mounted,
-# netmount will fail.
-# By default, this is empty.
-#critical_mounts="/home /var"
+# Location in which nftables initscript will save set rules on
+# service shutdown
+NFTABLES_SAVE="/var/lib/nftables/rules-save"
 
-──── /etc/conf.d/net-online ──────────────────────────────────────
-# The interfaces setting controls which interfaces the net-online
-# service considers in deciding whether the network is active. The
-# default is all interfaces that support ethernet.
-#interfaces=""
+# Options to pass to nft on save
+SAVE_OPTIONS="-n"
 
-# This setting controls whether a ping test is included in the test for
-# network connectivity after all interfaces are active.
-#include_ping_test=no
+# Save state on stopping nftables
+SAVE_ON_STOP="yes"
 
-# This setting is the host to attempt to ping if the above is yes.
-# The default is google.com.
-#ping_test_host=some.host.name
+# Only for OpenRC systems.
+# Set to "hard" or "soft" to panic when stopping instead of
+# clearing the rules
+# Soft panic loads a ruleset dropping any new or invalid connections
+# Hard panic loads a ruleset dropping all traffic
+PANIC_ON_STOP=""
 
-# The timeout setting controls how long the net-online service waits
-# for the network to be configured.
-# The default is 120 seconds.
-# if this is set to 0, the wait is infinite.
-#timeout=120
+# If you need to log nftables messages as soon as nftables starts,
+# AND your logger does NOT depend on the network, then you may wish
+# to uncomment the next line.
+# If your logger depends on the network, and you uncomment this line
+# you will create an unresolvable circular dependency during startup.
+# After commenting or uncommenting this line, you must run 'rc-update -u'.
+#rc_use="logger"
 
 ──── /etc/conf.d/pciparm ─────────────────────────────────────────
 # Apply to all devices:
@@ -1926,6 +1711,18 @@ SETPCI_OPT="-f"
 # Default port for Python's pydoc server.
 PYDOC3_14_PORT="7464"
 
+──── /etc/conf.d/radvd ───────────────────────────────────────────
+# Copyright 1999-2005 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+
+# Extra options to pass to radvd
+OPTIONS=""
+
+# Set this to "no" to tell the init script NOT to set up IPv6 forwarding
+# using /proc/sys/net/ipv6/conf/all/forwarding
+# Only change this if you know what you're doing!
+FORWARD="yes"
+
 ──── /etc/conf.d/rsyncd ──────────────────────────────────────────
 # /etc/conf.d/rsyncd: config file for /etc/init.d/rsyncd
 
@@ -1933,21 +1730,58 @@ PYDOC3_14_PORT="7464"
 # for valid cmdline options
 #RSYNC_OPTS=""
 
-──── /etc/conf.d/seedrng ─────────────────────────────────────────
-# The convention in this file is to show the default settings commented out.
-#
-# Sometimes you want to have urandom start before "localmount" (say for crypt
-# swap), so you will need to customize this behavior.  If you have /var on a
-# separate partition, make sure paths under /var are adjusted to point to
-# locations on your root device.
-#
-# Set skip_credit to yes or true if you do not want seed files to actually
-# credit the random number generator. For example, you should set this if you
-# plan to replicate the file system image without removing the contents of
-# ${seed_dir}.
-#
-# seed_dir=/var/lib/seedrng
-# skip_credit=no
+──── /etc/conf.d/samba ───────────────────────────────────────────
+# Add "winbind" to the daemon_list if you also want winbind to start.
+# Replace "smbd nmbd" by "samba4" if you want the active directory domain controller part or the ntvfs
+# file server part or the rpc proxy to start.
+# Note that samba4 controls 'smbd' by itself, thus it can't be started manually. You can, however,
+# tweak the behaviour of a samba4-controlled smbd by modifying your '/etc/samba/smb.conf' file
+# accordingly.
+daemon_list="smbd nmbd"
+
+piddir="/run/samba"
+
+#----------------------------------------------------------------------------
+# Daemons calls: <daemon_name>_<command_option>
+#----------------------------------------------------------------------------
+my_service_name="samba"
+my_service_PRE="unset TMP TMPDIR"
+my_service_POST=""
+
+#----------------------------------------------------------------------------
+# Daemons calls: <daemon_name>_<command_option>
+#----------------------------------------------------------------------------
+smbd_start_options="-D"
+smbd_command="/usr/sbin/smbd"
+smbd_start="start-stop-daemon --start --exec ${smbd_command} -- ${smbd_start_options}"
+smbd_stop="start-stop-daemon --stop --exec ${smbd_command}"
+smbd_reload="killall -HUP smbd"
+
+nmbd_start_options="-D"
+nmbd_command="/usr/sbin/nmbd"
+nmbd_start="start-stop-daemon --start --exec ${nmbd_command} -- ${nmbd_start_options}"
+nmbd_stop="start-stop-daemon --stop --exec ${nmbd_command}"
+nmbd_reload="killall -HUP nmbd"
+
+samba4_start_options=""
+samba4_command="/usr/sbin/samba"
+samba4_pidfile="${piddir}/samba.pid"
+samba4_start="start-stop-daemon --start --exec ${samba4_command} --pidfile ${samba4_pidfile} -- ${samba4_start_options}"
+samba4_stop="start-stop-daemon --stop --exec ${samba4_command} --pidfile ${samba4_pidfile}"
+samba4_reload="killall -HUP samba"
+
+winbind_start_options=""
+winbind_command="/usr/sbin/winbindd"
+winbind_start="start-stop-daemon --start --exec ${winbind_command} -- ${winbind_start_options}"
+winbind_stop="start-stop-daemon --stop --exec ${winbind_command}"
+winbind_reload="killall -HUP winbindd"
+
+
+──── /etc/conf.d/smartd ──────────────────────────────────────────
+# /etc/conf.d/smartd: config file for /etc/init.d/smartd
+
+# Insert any other options needed
+SMARTD_OPTS=""
 
 ──── /etc/conf.d/sshd ────────────────────────────────────────────
 # /etc/conf.d/sshd: config file for /etc/init.d/sshd
@@ -1988,29 +1822,6 @@ SSHD_OPTS=""
 # May be needed if ListenAddress is used to ensure that the interface
 # has been configured.
 #rc_need="net.eth0"
-
-──── /etc/conf.d/swap ────────────────────────────────────────────
-# If you are only using local swap partitions, you should not change
-# this file. Otherwise, you need to uncomment the below rc_before line
-# followed by the appropriate rc_need line.
-#rc_before="!localmount"
-#
-# If you are using swap files stored on local file systems, uncomment
-# this line.
-#rc_need="localmount"
-#
-# If you are using swap files stored on network file systems or swap
-# partitions stored on network block devices such as iSCSI, uncomment
-# this line.
-#rc_need="netmount"
-
-──── /etc/conf.d/swclock ─────────────────────────────────────────
-# This is the location of the reference file swclock uses to set the
-# system date and time.
-# This is the default path. If you are using it, you do not need to
-# uncomment it. If you are using the default and have /var on its own
-# file system, you need to add the appropriate rc_after setting.
-# swclock_file=/var/lib/misc/openrc-shutdowntime
 
 ──── /etc/conf.d/sysklogd ────────────────────────────────────────
 # Config file for /etc/init.d/sysklogd
@@ -2075,21 +1886,6 @@ vm.dirty_bytes = 268435456
 vm.dirty_background_bytes = 134217728
 vm.vfs_cache_pressure = 50
 fs.inotify.max_user_instances = 8192
-
-──── /etc/sysctl.d/README ────────────────────────────────────────
-Kernel system variables configuration files
-
-Files found under the /etc/sysctl.d directory that end with .conf are
-parsed within sysctl(8) at boot time.  If you want to set kernel variables
-you can either edit /etc/sysctl.conf or make a new file.
-
-The filename isn't important, but don't make it a package name as it may clash
-with something the package builder needs later. The file name must end
-with .conf, or it will not be read.
-
-The recommended location for local system settings is /etc/sysctl.d/local.conf
-but as long as you follow the rules for the name of the file, anything will
-work. see the sysctl.conf(5) man page for details of the format.
 
 ──── /etc/modprobe.d
     [absent]
@@ -2156,11 +1952,12 @@ DENO_NO_UPDATE_CHECK=1
 ──── /etc/env.d/50npm ────────────────────────────────────────────
 NPM_CONFIG_GLOBALCONFIG=/etc/npm/npmrc
 
-──── /etc/env.d/50rust-1.96.1 ────────────────────────────────────
-MANPATH="/usr/lib/rust/man-1.96.1"
-
 ──── /etc/env.d/50rust-bin-1.94.1 ────────────────────────────────
 MANPATH="/usr/lib/rust/man-bin-1.94.1"
+
+
+──── /etc/env.d/50rust-bin-1.98.1 ────────────────────────────────
+MANPATH="/usr/lib/rust/man-bin-1.98.1"
 
 
 ──── /etc/env.d/51dconf ──────────────────────────────────────────
@@ -2246,24 +2043,6 @@ MULTIOSDIRS="../lib64:../lib"
 /usr/bin/cargo-clippy
 /usr/bin/rustfmt
 /usr/bin/cargo-fmt
-/usr/lib/rust/libexec
-/usr/bin/rust-analyzer
-
-──── /etc/env.d/rust/provider-rust-1.96.1 ────────────────────────
-/usr/bin/cargo
-/usr/bin/rustdoc
-/usr/bin/rust-gdb
-/usr/bin/rust-gdbgui
-/usr/bin/rust-lldb
-/usr/lib/rustlib
-/usr/lib/rust/lib
-/usr/lib/rust/man
-/usr/share/doc/rust
-/usr/bin/clippy-driver
-/usr/bin/cargo-clippy
-/usr/bin/rustfmt
-/usr/bin/cargo-fmt
-/usr/lib/rust/libexec
 /usr/bin/rust-analyzer
 
 ──── /etc/env.d/rust/provider-rust-bin-1.94.1 ────────────────────
@@ -2280,6 +2059,23 @@ MULTIOSDIRS="../lib64:../lib"
 /usr/bin/cargo-clippy
 /usr/bin/rustfmt
 /usr/bin/cargo-fmt
+/usr/bin/rust-analyzer
+
+──── /etc/env.d/rust/provider-rust-bin-1.98.1 ────────────────────
+/usr/bin/cargo
+/usr/bin/rustdoc
+/usr/bin/rust-gdb
+/usr/bin/rust-gdbgui
+/usr/bin/rust-lldb
+/usr/lib/rustlib
+/usr/lib/rust/lib
+/usr/lib/rust/man
+/usr/share/doc/rust
+/usr/bin/clippy-driver
+/usr/bin/cargo-clippy
+/usr/bin/rustfmt
+/usr/bin/cargo-fmt
+/usr/bin/rust-analyzer
 
 ──── /etc/X11/xorg.conf.d
     [absent]
@@ -2289,13 +2085,12 @@ MULTIOSDIRS="../lib64:../lib"
 # Remove qtvirtualkeyboard as InputMethod default
 InputMethod=
 
-──── /etc/sddm.conf.d/10-wayland.conf ────────────────────────────
-[General]
+# Which display server should be used (default: x11)
 DisplayServer=wayland
 GreeterEnvironment=QT_WAYLAND_SHELL_INTEGRATION=layer-shell
 
 [Wayland]
-CompositorCommand=kwin_wayland --drm --no-lockscreen --no-global-shortcuts --locale1
+CompositorCommand=kwin_wayland --drm --no-lockscreen --no-global-shortcuts
 
 ──── /etc/sddm.conf.d/kde_settings.conf ──────────────────────────
 [Autologin]
