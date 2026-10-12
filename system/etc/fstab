@@ -1,0 +1,6 @@
+UUID=c1765e1d-0265-4699-94ce-31099ee30e29  /                 btrfs  noatime,compress=zstd,ssd,subvol=/@          0 0
+UUID=c1765e1d-0265-4699-94ce-31099ee30e29  /home             btrfs  noatime,subvol=/@home                        0 0
+UUID=c1765e1d-0265-4699-94ce-31099ee30e29  /var/tmp/portage  btrfs  noatime,subvol=/@gentoo-portage              0 0
+UUID=c1765e1d-0265-4699-94ce-31099ee30e29  /swap             btrfs  noatime,subvol=/@swap                        0 0
+UUID=76B3-9106                             /boot             vfat   noatime,fmask=0133,dmask=0022                0 2
+UUID=7de0abcd-6217-4f16-8b08-c1082c88b4ad  /srv/music        xfs    noatime,defaults,noauto                      0 0

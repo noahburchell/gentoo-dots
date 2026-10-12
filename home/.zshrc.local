@@ -1,0 +1,22 @@
+fpath=(/usr/share/zsh/site-functions $fpath)
+
+HISTSIZE=100000
+SAVEHIST=100000
+setopt SHARE_HISTORY
+setopt HIST_REDUCE_BLANKS
+
+SPROMPT='zsh: correct %B%F{red}%R%f%b to %B%F{green}%r%f%b [%Bnyae%b]? '
+
+for k in "${terminfo[kcuu1]}" '^[[A' '^[OA'; do bindkey "$k" up-history;   done
+for k in "${terminfo[kcud1]}" '^[[B' '^[OB'; do bindkey "$k" down-history; done
+
+alias vi=nvim
+alias vim=nvim
+alias luck="fortune computers debian kernelcookies linux perl"
+
+source ${ZDOTDIR:-$HOME}/.zextras
+
+alias ls='eza --group-directories-first'
+alias la='eza -la --group-directories-first'
+source /usr/share/zsh/site-functions/zsh-autosuggestions.zsh
+source /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh

@@ -1,0 +1,8 @@
+[safe]
+	directory = /var/db/repos/guru
+	directory = /var/db/repos/tatsh-overlay
+	directory = /var/db/repos/noahburchell
+	directory = /var/db/repos/haxefetch-overlay
+	directory = /var/db/repos/nburch
+	directory = /var/db/repos/steam-overlay
+	directory = /var/db/repos/gentoo

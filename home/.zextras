@@ -1,0 +1,99 @@
+transcribe() {
+	emulate -L zsh
+
+	local model=${WHISPER_MODEL:-/usr/local/share/whisper/models/ggml-large-v3-turbo.bin}
+
+	local -a files wargs
+	local i=${argv[(i)--]}
+	files=("${(@)argv[1,i-1]}")
+	wargs=("${(@)argv[i+1,-1]}")
+
+	if (( ! $#files )); then
+		print -u2 -r -- "usage: transcribe FILE... [-- WHISPER_ARGS]"
+		return 2
+	fi
+
+	local arg
+	for arg in $wargs; do
+		case $arg in
+			(-otxt|-ovtt|-osrt|-olrc|-owts|-ocsv|-oj|-ojf|-of|--output-*)
+				print -u2 -r -- "transcribe: '$arg' would write a file; output goes to stdout only, redirect it instead"
+				return 2 ;;
+		esac
+	done
+
+	local cmd
+	for cmd in ffmpeg ffprobe whisper-cli; do
+		(( $+commands[$cmd] )) || { print -u2 -r -- "transcribe: $cmd not found in PATH"; return 127 }
+	done
+
+	local -a margs
+	if (( ${wargs[(I)(-m|--model)]} )); then
+		margs=()
+	else
+		[[ -r $model ]] || { print -u2 -r -- "transcribe: model not found: $model"; return 1 }
+		margs=(-m "$model")
+	fi
+
+	local tmp errlog f src wav info line rc=0 n=0
+	local -A p
+	tmp=$(mktemp -t transcribe.XXXXXX.wav) || return 1
+	errlog=$(mktemp -t transcribe.XXXXXX.log) || { rm -f -- $tmp; return 1 }
+
+	{
+		for f in $files; do
+			if (( $#files > 1 )); then
+				(( n++ )) && print
+				print -r -- "==> $f"
+			fi
+
+			if [[ ! -f $f || ! -r $f ]]; then
+				print -u2 -r -- "transcribe: can't read: $f"
+				rc=1; continue
+			fi
+			src=${f:a}
+
+			info=$(ffprobe -v error -select_streams a:0 \
+					-show_entries stream=codec_name,sample_rate,channels:format=format_name \
+					-of default=noprint_wrappers=1 "$src" 2>/dev/null)
+			p=()
+			for line in ${(f)info}; do p[${line%%=*}]=${line#*=}; done
+
+			if [[ -z ${p[codec_name]-} ]]; then
+				print -u2 -r -- "transcribe: no audio stream in: $f"
+				rc=1; continue
+			fi
+
+			if [[ ${p[format_name]-} == wav && ${p[codec_name]} == pcm_s16le &&
+			      ${p[sample_rate]-} == 16000 && ${p[channels]-} == 1 ]]; then
+				wav=$src
+			else
+				if ! ffmpeg -nostdin -hide_banner -loglevel error -y -i "$src" \
+						-map 0:a:0 -ar 16000 -ac 1 -c:a pcm_s16le "$tmp" 2>$errlog; then
+					print -u2 -r -- "transcribe: ffmpeg failed on: $f"
+					cat -- $errlog >&2
+					rc=1; continue
+				fi
+				wav=$tmp
+			fi
+
+			whisper-cli -np "${margs[@]}" -f "$wav" "${wargs[@]}" 2>$errlog | sed -u '/./,$!d'
+			if (( pipestatus[1] )); then
+				print -u2 -r -- "transcribe: whisper-cli failed on: $f"
+				cat -- $errlog >&2
+				rc=1
+			fi
+		done
+	} always {
+		rm -f -- $tmp $errlog
+	}
+
+	return rc
+}
+
+_ask() {
+	claude --settings ~/.claude/headless.json --safe-mode --tools "" \
+			--no-session-persistence --append-system-prompt-file ~/.claude/ask.md "$@"
+}
+alias ask='noglob _ask --effort low -p'
+alias askk='noglob _ask --model haiku -p'

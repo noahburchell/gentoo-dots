@@ -1,0 +1,5 @@
+#!/bin/bash
+#%depon: basic, seatd
+#%type: daemon
+#%restart: always
+exec greetd

@@ -1,0 +1,10 @@
+[general]
+import = ["~/.config/alacritty/vscode.toml"]
+
+[window]
+dimensions = { columns = 150, lines = 40 }
+padding = { x = 5, y = 5 }
+
+[cursor.style]
+shape = "Beam"
+blinking = "On"

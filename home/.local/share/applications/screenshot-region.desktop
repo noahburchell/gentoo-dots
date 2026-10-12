@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Screenshot Region to Clipboard
+Exec=/usr/bin/spectacle --desktopfile org.kde.spectacle.desktop -b -c -r -n
+Icon=spectacle
+Terminal=false
+StartupNotify=false
+NoDisplay=true
+X-KDE-DBUS-Restricted-Interfaces=org.kde.KWin.ScreenShot2
+X-KDE-Wayland-Interfaces=org_kde_plasma_window_management,zkde_screencast_unstable_v1
+X-KDE-Shortcuts=Print,Meta+Shift+S

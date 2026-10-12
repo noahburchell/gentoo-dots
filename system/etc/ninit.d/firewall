@@ -1,0 +1,18 @@
+#!/bin/bash
+#%depon: loopback
+#%depof: dhcpcd
+#%onfail: stop
+exec nft -f - <<'EOF'
+destroy table ip host
+define LAN = 192.168.1.0/24
+table ip host {
+	chain input {
+		type filter hook input priority filter; policy drop;
+		ct state invalid drop
+		ct state established,related accept
+		iif lo accept
+		ip protocol icmp accept
+		ip saddr $LAN tcp dport 22 accept
+	}
+}
+EOF

@@ -1,0 +1,114 @@
+media-video/pipewire     -ffmpeg pipewire-alsa sound-server
+media-libs/libheif       x265
+dev-qt/qtbase            libproxy
+dev-qt/qtmultimedia      -v4l
+sys-devel/gcc            graphite -fortran -jit
+llvm-runtimes/clang-runtime -sanitize
+dev-qt/qtspeech          -speechd
+app-admin/doas           persist
+media-video/ffmpeg       zimg x265 svt-av1 lame opus
+media-libs/libvpx        postproc
+media-video/mpv          -libmpv sixel -pulseaudio -uchardet -drm -alsa pipewire
+media-fonts/noto         -extra
+app-misc/fastfetch       drm elf
+app-emulation/qemu       -oss -pulseaudio -vnc -png -jpeg
+net-misc/aria2           adns
+www-client/firefox       system-png system-pipewire eme-free hwaccel openh264 wasm-sandbox jpegxl
+media-libs/libpng        apng
+sys-apps/busybox         -pam static
+virtual/libcrypt         static-libs
+sys-libs/libxcrypt       static-libs
+dev-lang/rust-bin        rust-src rust-analyzer
+games-misc/fortune-mod   offensive
+games-misc/fortune-mod-kernelcookies offensive
+net-libs/gnutls          pkcs11
+sys-apps/iproute2        -iptables
+sys-kernel/linux-firmware -initramfs savedconfig
+sys-apps/util-linux      tty-helpers
+app-crypt/gnupg          -smartcard
+dev-vcs/git              -perl -webdav
+kde-apps/thumbnailers    video
+net-misc/curl            -imap -pop3 -smtp -tftp
+dev-qt/qtbase            X
+dev-qt/qtmultimedia      X
+x11-libs/gtk+            X
+x11-libs/cairo           X
+kde-frameworks/kwindowsystem X
+x11-libs/libxkbcommon    X
+sys-apps/dbus            X elogind
+media-libs/mesa          X
+media-libs/libepoxy      X
+gui-wm/sway              X
+gui-libs/wlroots         X lcms
+media-libs/freetype      harfbuzz
+x11-base/xwayland        libei
+kde-frameworks/kfilemetadata exif taglib
+sys-libs/zlib            minizip
+app-text/xmlto           text
+dev-qt/*                 icu opengl
+kde-frameworks/kimageformats avif jpegxl raw
+media-gfx/darktable      gphoto2
+sys-auth/seatd           server
+games-util/gamemode      elogind
+sys-auth/elogind         -pam -policykit
+games-util/game-device-udev-rules -acl
+media-sound/quodlibet    gstreamer
+media-libs/libgphoto2    CAMERAS: -* ptp2
+
+media-libs/fontconfig    abi_x86_32
+sys-libs/libudev-compat  abi_x86_32
+x11-libs/libdrm          abi_x86_32
+media-libs/libpulse      abi_x86_32
+media-libs/vulkan-loader abi_x86_32 X
+media-libs/mesa          abi_x86_32
+dev-libs/expat           abi_x86_32
+dev-util/spirv-tools     abi_x86_32
+media-libs/libglvnd      abi_x86_32 X
+llvm-core/llvm           abi_x86_32
+media-libs/libva         abi_x86_32
+media-libs/libdisplay-info abi_x86_32
+dev-libs/wayland         abi_x86_32
+x11-libs/libX11          abi_x86_32
+x11-libs/libxshmfence    abi_x86_32
+x11-libs/libXext         abi_x86_32
+x11-libs/libXxf86vm      abi_x86_32
+x11-libs/libxcb          abi_x86_32
+x11-libs/libXfixes       abi_x86_32
+x11-libs/xcb-util-keysyms abi_x86_32
+app-arch/zstd            abi_x86_32
+x11-libs/libXrandr       abi_x86_32
+x11-libs/libXrender      abi_x86_32
+x11-libs/libXau          abi_x86_32
+x11-libs/libXdmcp        abi_x86_32
+dev-libs/libffi          abi_x86_32
+dev-libs/libxml2         abi_x86_32
+dev-libs/icu             abi_x86_32
+media-libs/libsndfile    abi_x86_32
+net-libs/libasyncns      abi_x86_32
+sys-apps/dbus            abi_x86_32
+dev-libs/glib            abi_x86_32
+dev-libs/libpcre2        abi_x86_32
+sys-apps/util-linux      abi_x86_32
+media-libs/flac          abi_x86_32
+media-libs/libogg        abi_x86_32
+media-libs/libvorbis     abi_x86_32
+media-libs/opus          abi_x86_32
+media-sound/lame         abi_x86_32
+media-sound/mpg123-base  abi_x86_32
+media-libs/freetype      abi_x86_32
+app-arch/bzip2           abi_x86_32
+media-libs/libpng        abi_x86_32
+media-libs/harfbuzz      abi_x86_32
+x11-libs/cairo           abi_x86_32
+media-gfx/graphite2      abi_x86_32
+x11-libs/pixman          abi_x86_32
+virtual/zlib             abi_x86_32
+sys-libs/zlib            abi_x86_32
+virtual/libintl          abi_x86_32
+virtual/libudev          abi_x86_32
+sys-apps/systemd-utils   abi_x86_32
+virtual/libiconv         abi_x86_32
+virtual/libelf           abi_x86_32
+dev-libs/elfutils        abi_x86_32
+app-arch/xz-utils        abi_x86_32
+virtual/opengl           abi_x86_32

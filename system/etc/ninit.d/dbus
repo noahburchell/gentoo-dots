@@ -1,0 +1,8 @@
+#!/bin/bash
+#%depon: fs
+#%type: daemon
+#%notify: 3
+#%restart: always
+#%start-timeout: 10s
+mkdir -p /run/dbus
+exec dbus-daemon --system --nofork --nopidfile --print-address=3

@@ -1,9 +1,15 @@
-# dotfiles
+# gentoo-dots
 
-you could probably recreate my (almost) exact system from this, my wallpapers are from:
+this is my current gentoo setup
 
-https://store.thaomaoh.com/b/reverie
-and https://store.thaomaoh.com/b/hush
+### credits
 
-Font from: Ultimate Oldschool PC Font Pack by VileR (https://int10h.org/oldschool-pc-fonts/), CC BY-SA 4.0.
-Therefore, everything here is CC0 except Bm437_IBM_VGA_8x16.otb, which is CC BY-SA 4.0 by VileR
+credit to tsoding for the gruber theme
+
+credit to kickstart.nvim for the base of my nvim config
+
+### contacts
+
+<dots@nburch.org>
+
+how do i seem to have an email for literally every project? well, its a catch all. 

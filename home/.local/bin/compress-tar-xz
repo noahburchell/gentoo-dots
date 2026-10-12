@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+[ $# -eq 0 ] && exit 1
+
+dir=$(dirname -- "$1")
+if [ $# -eq 1 ]; then
+    default="$dir/$(basename -- "$1").tar.xz"
+else
+    default="$dir/Archive.tar.xz"
+fi
+
+out=$(kdialog --title "Compress to tar.xz" \
+      --getsavefilename "$default" "*.tar.xz|XZ-compressed tar archive") || exit 0
+[[ $out == *.tar.xz ]] || out="$out.tar.xz"
+
+names=()
+for f in "$@"; do names+=("$(basename -- "$f")"); done
+
+if err=$(XZ_OPT=-T0 tar -C "$dir" -cJf "$out" -- "${names[@]}" 2>&1); then
+    kdialog --passivepopup "Saved $(basename -- "$out")" 5
+else
+    kdialog --error "Compression failed: $err"
+fi

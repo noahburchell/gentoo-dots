@@ -1,0 +1,57 @@
+[font]
+normal = { family = "Iosevka", style = "Regular" }
+bold = { family = "Iosevka", style = "Bold" }
+italic = { family = "Iosevka", style = "Italic" }
+bold_italic = { family = "Iosevka", style = "Bold Italic" }
+size = 18
+
+[colors]
+draw_bold_text_with_bright_colors = false
+
+[colors.primary]
+background = "#181818"
+foreground = "#e4e4ef"
+
+[colors.cursor]
+text = "#181818"
+cursor = "#ffdd33"
+
+[colors.selection]
+text = "CellForeground"
+background = "#484848"
+
+[colors.normal]
+black = "#484848"
+red = "#c73c3f"
+green = "#73c936"
+yellow = "#ffdd33"
+blue = "#96a6c8"
+magenta = "#9e95c7"
+cyan = "#95a99f"
+white = "#e4e4ef"
+
+[colors.bright]
+black = "#52494e"
+red = "#ff4f58"
+green = "#89e051"
+yellow = "#fff554"
+blue = "#acbcdf"
+magenta = "#b4abde"
+cyan = "#abbfb5"
+white = "#ffffff"
+
+[colors.search]
+matches = { foreground = "#f4f4ff", background = "#565f73" }
+focused_match = { foreground = "#000000", background = "#f5f5f5" }
+
+[colors.hints]
+start = { foreground = "#181818", background = "#ffdd33" }
+end = { foreground = "#181818", background = "#95a99f" }
+
+[colors.line_indicator]
+foreground = "#181818"
+background = "#95a99f"
+
+[colors.footer_bar]
+foreground = "#e4e4ef"
+background = "#282828"

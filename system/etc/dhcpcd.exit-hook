@@ -1,0 +1,7 @@
+case "$reason" in
+BOUND|REBOOT|STATIC|BOUND6|REBOOT6|ROUTERADVERT)
+	if [ -p /run/dhcpcd.ready ]; then
+		echo "$reason" 1<> /run/dhcpcd.ready
+	fi
+	;;
+esac

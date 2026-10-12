@@ -1,0 +1,8 @@
+[core]
+	editor = vim
+[pull]
+	rebase = false
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	allowedSignersFile = /home/noah/.config/git/allowed_signers

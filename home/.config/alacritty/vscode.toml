@@ -1,0 +1,57 @@
+[font]
+normal = { family = "Cascadia Mono NF", style = "SemiBold" }
+bold = { family = "Cascadia Mono NF", style = "SemiBold" }
+italic = { family = "Cascadia Mono NF", style = "Italic" }
+bold_italic = { family = "Cascadia Mono NF", style = "Italic" }
+size = 12
+
+[colors]
+draw_bold_text_with_bright_colors = true
+
+[colors.primary]
+background = "#181818"
+foreground = "#cccccc"
+
+[colors.cursor]
+text = "#181818"
+cursor = "#aeafad"
+
+[colors.selection]
+text = "#ffffff"
+background = "#3a3d41"
+
+[colors.normal]
+black = "#000000"
+red = "#cd3131"
+green = "#0dbc79"
+yellow = "#e5e510"
+blue = "#2472c8"
+magenta = "#bc3fbc"
+cyan = "#11a8cd"
+white = "#e5e5e5"
+
+[colors.bright]
+black = "#666666"
+red = "#f14c4c"
+green = "#23d18b"
+yellow = "#f5f543"
+blue = "#3b8eea"
+magenta = "#d670d6"
+cyan = "#29b8db"
+white = "#e5e5e5"
+
+[colors.search]
+matches = { foreground = "#ffffff", background = "#5e2f10" }
+focused_match = { foreground = "#181818", background = "#9e6a03" }
+
+[colors.hints]
+start = { foreground = "#181818", background = "#f5f543" }
+end = { foreground = "#181818", background = "#9d9d9d" }
+
+[colors.line_indicator]
+foreground = "#181818"
+background = "#666666"
+
+[colors.footer_bar]
+foreground = "#cccccc"
+background = "#2b2b2b"

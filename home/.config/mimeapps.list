@@ -1,0 +1,9 @@
+[Added Associations]
+application/x-zerosize=org.kde.kwrite.desktop;Neovim.desktop;
+image/svg+xml=org.kde.gwenview.desktop;
+x-scheme-handler/claude-cli=claude-code-url-handler.desktop;
+
+[Default Applications]
+application/x-zerosize=org.kde.kwrite.desktop;
+image/svg+xml=org.kde.gwenview.desktop;
+x-scheme-handler/claude-cli=claude-code-url-handler.desktop

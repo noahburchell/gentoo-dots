@@ -1,0 +1,6 @@
+#!/bin/bash
+#%depon: udev
+#%type: daemon
+#%notify: 3
+#%restart: always
+exec seatd -n 3 -g seat

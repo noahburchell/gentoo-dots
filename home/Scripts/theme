@@ -1,0 +1,127 @@
+#!/bin/sh
+
+cfg=${XDG_CONFIG_HOME:-$HOME/.config}
+themes='zinc vscode apple pastel gruber'
+status=0
+
+usage() {
+	cat <<EOF
+usage: theme [OPTION] [NAME]
+
+  -l, --list  list the themes, marking the current one with *
+  -m, --menu  choose the theme from a fuzzel menu
+      --help  display this help and exit
+
+NAME is zinc, vscode, apple, pastel or gruber
+with no NAME, print the current theme
+EOF
+}
+
+fail() {
+	printf 'theme: %s\n' "$*" >&2
+	status=1
+}
+
+edit() {
+	if [ ! -f "$1" ]; then
+		fail "$1: No such file or directory"
+		return
+	fi
+	if ! grep -q "$2" "$1"; then
+		fail "$1: no line matches '$2'"
+		return
+	fi
+	sed -i "s|$2|$3|" "$1" || fail "sed $1: failed"
+}
+
+current() {
+	sed -n 's|^import = \["~/\.config/alacritty/\(.*\)\.toml"\]$|\1|p' "$cfg/alacritty/alacritty.toml"
+}
+
+case $# in
+0)
+	current
+	exit
+	;;
+1)
+	;;
+*)
+	printf 'theme: expected 1 operand, got %d\n' "$#" >&2
+	usage >&2
+	exit 2
+	;;
+esac
+
+case $1 in
+--help)
+	usage
+	exit 0
+	;;
+-l | --list)
+	cur=$(current)
+	for t in $themes; do
+		if [ "$t" = "$cur" ]; then
+			printf '* %s\n' "$t"
+		else
+			printf '  %s\n' "$t"
+		fi
+	done
+	exit 0
+	;;
+-m | --menu)
+	set -- "$(printf '%s\n' $themes | fuzzel --dmenu --only-match --minimal-lines --placeholder=theme --select="$(current)")"
+	[ -n "$1" ] || exit 0
+	;;
+-*)
+	printf "theme: unknown option '%s'\n" "$1" >&2
+	usage >&2
+	exit 2
+	;;
+esac
+
+case $1 in
+zinc)
+	kde=Zinc btop=zinc
+	;;
+vscode)
+	kde=VSCodeDark btop=vscode
+	;;
+apple)
+	kde=AppleDark btop=apple
+	;;
+pastel)
+	kde=DarkPastel btop=pastel
+	;;
+gruber)
+	kde=GruberDarker btop=gruber
+	;;
+*)
+	printf "theme: unknown theme '%s', expected zinc, vscode, apple, pastel or gruber\n" "$1" >&2
+	usage >&2
+	exit 2
+	;;
+esac
+name=$1
+
+kwriteconfig6 --file dolphinrc --group UiSettings --key ColorScheme "$kde" || fail "kwriteconfig6 dolphinrc: failed"
+edit "$cfg/qt6ct/qt6ct.conf" '^color_scheme_path=.*$' "color_scheme_path=$cfg/qt6ct/colors/$name.conf"
+edit "$cfg/alacritty/alacritty.toml" '^import = \[".*"\]$' "import = [\"~/.config/alacritty/$name.toml\"]"
+edit "$cfg/nvim/init.lua" "^\([[:space:]]*vim\.cmd\.colorscheme \)'.*'\$" "\1'$name'"
+edit "$cfg/tmux/tmux.conf" '^source-file ~/\.config/tmux/.*\.conf$' "source-file ~/.config/tmux/$name.conf"
+edit "$cfg/btop/btop.conf" '^color_theme = ".*"$' "color_theme = \"$btop\""
+edit "$cfg/sway/config" '^include ~/\.config/sway/.*\.conf$' "include ~/.config/sway/$name.conf"
+edit "$cfg/fuzzel/fuzzel.ini" '^include=~/\.config/fuzzel/.*\.ini$' "include=~/.config/fuzzel/$name.ini"
+
+if [ -n "$SWAYSOCK" ]; then
+	swaymsg reload >/dev/null || fail "swaymsg reload: failed"
+fi
+
+if tmux has-session 2>/dev/null; then
+	tmux source-file "$cfg/tmux/tmux.conf" || fail "tmux source-file $cfg/tmux/tmux.conf: failed"
+fi
+
+for s in "${XDG_RUNTIME_DIR:-/tmp}"/nvim.*; do
+	[ -S "$s" ] && nvim --server "$s" --remote-expr "execute('colorscheme $name')" >/dev/null 2>&1
+done
+
+exit $status
