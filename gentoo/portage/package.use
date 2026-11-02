@@ -1,5 +1,5 @@
 media-video/pipewire                 -ffmpeg pipewire-alsa sound-server bluetooth
-net-wireless/bluez                   -mesh -obex -udev -cups -midi -deprecated -extra-tools -experimental readline
+net-wireless/bluez                   -mesh -obex -udev
 media-libs/libheif                   x265 gdk-pixbuf
 dev-qt/qtbase                        opengl
 sys-devel/gcc                        graphite vtv
@@ -12,7 +12,7 @@ media-fonts/noto                     -extra
 app-misc/fastfetch                   drm elf
 app-emulation/qemu                   -oss -pulseaudio -vnc -png -jpeg
 net-misc/aria2                       adns bittorrent
-www-client/firefox                   system-png system-pipewire eme-free hwaccel openh264 wasm-sandbox jpegxl
+www-client/firefox                   system-png system-pipewire eme-free hwaccel openh264 wasm-sandbox
 media-libs/libpng                    apng
 sys-apps/busybox                     -pam static
 virtual/libcrypt                     static-libs
@@ -25,9 +25,8 @@ sys-apps/iproute2                    -iptables
 sys-kernel/linux-firmware            -initramfs savedconfig
 sys-apps/util-linux                  tty-helpers
 app-crypt/gnupg                      -smartcard
-dev-vcs/git                          perl -webdav
+dev-vcs/git                          -webdav
 net-misc/curl                        -imap -pop3 -smtp -tftp
-x11-libs/gtk+                        -X
 x11-libs/cairo                       X
 x11-libs/libxkbcommon                X
 sys-apps/dbus                        X elogind
@@ -37,7 +36,6 @@ gui-wm/sway                          X
 gui-libs/wlroots                     X lcms
 x11-base/xwayland                    libei
 media-libs/freetype                  harfbuzz
-app-text/xmlto                       -text
 media-gfx/darktable                  gphoto2
 xfce-base/thunar                     -trash-panel-plugin
 xfce-base/tumbler                    jpeg raw
@@ -50,6 +48,10 @@ media-sound/quodlibet                gstreamer
 app-emacs/emacs-common               gui gsettings
 app-editors/emacs                    gui gtk cairo harfbuzz png jpeg gif svg webp tiff tree-sitter sqlite libxml2 gsettings gfile
 sys-apps/smartmontools               -daemon
+sys-fs/btrfs-progs                   -man
+sys-auth/elogind                     -pam -policykit
+games-util/gamemode                  elogind
+app-crypt/gcr                        gtk
 
 media-libs/fontconfig                abi_x86_32
 sys-libs/libudev-compat              abi_x86_32
@@ -106,7 +108,3 @@ virtual/libelf                       abi_x86_32
 dev-libs/elfutils                    abi_x86_32
 app-arch/xz-utils                    abi_x86_32
 virtual/opengl                       abi_x86_32
-sys-fs/btrfs-progs                   -man
-sys-auth/elogind                     -pam -policykit
-games-util/gamemode                  elogind
->=app-crypt/gcr-3.41.2-r2:0 gtk
