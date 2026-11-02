@@ -1,2 +1,2 @@
 #!/bin/bash
-ip link set lo up
+exec ip link set lo up

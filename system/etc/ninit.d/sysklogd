@@ -1,5 +1,4 @@
 #!/bin/bash
-#%depon: fs
 #%type: daemon
 #%restart: always
 #%onfail: warn

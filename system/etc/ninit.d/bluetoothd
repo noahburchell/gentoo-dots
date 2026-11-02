@@ -1,0 +1,6 @@
+#!/bin/bash
+#%depon: dbus
+#%type: daemon
+#%restart: always
+
+exec /usr/libexec/bluetooth/bluetoothd

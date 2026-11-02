@@ -1,0 +1,54 @@
+#!/bin/bash
+set -euo pipefail
+
+usage() {
+	cat <<EOF
+usage: bstatus
+
+      --help  display this help and exit
+EOF
+}
+
+case ${1-} in
+"")
+	;;
+--help)
+	usage
+	exit 0
+	;;
+-*)
+	printf "bstatus: unknown option '%s'\n" "$1" >&2
+	usage >&2
+	exit 2
+	;;
+*)
+	printf "bstatus: extra operand '%s'\n" "$1" >&2
+	usage >&2
+	exit 2
+	;;
+esac
+
+found=0
+for p in /sys/class/power_supply/hidpp_battery_*; do
+	[[ -e $p ]] || continue
+	found=1
+	read -r name <"$p/model_name"
+	read -r online <"$p/online"
+	if [[ $online != 1 ]]; then
+		printf '%-10s %4s  %s\n' "${name,,}" - offline
+		continue
+	fi
+	if read -r cap 2>/dev/null <"$p/capacity"; then
+		cap=$cap%
+	else
+		read -r cap <"$p/capacity_level"
+		cap=${cap,,}
+	fi
+	read -r st <"$p/status"
+	printf '%-10s %4s  %s\n' "${name,,}" "$cap" "${st,,}"
+done
+
+if ((!found)); then
+	echo 'bstatus: no logitech battery found' >&2
+	exit 1
+fi

@@ -1,2 +1,3 @@
 sys-kernel/linux-firmware linux-fw-redistributable
 games-util/steam-launcher ValveSteamLicense
+>=net-im/discord-1.0.166 all-rights-reserved

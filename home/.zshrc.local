@@ -10,8 +10,9 @@ SPROMPT='zsh: correct %B%F{red}%R%f%b to %B%F{green}%r%f%b [%Bnyae%b]? '
 for k in "${terminfo[kcuu1]}" '^[[A' '^[OA'; do bindkey "$k" up-history;   done
 for k in "${terminfo[kcud1]}" '^[[B' '^[OB'; do bindkey "$k" down-history; done
 
-alias vi=nvim
-alias vim=nvim
+alias mg='mg -n'
+alias vi='mg -n'
+alias vim='mg -n'
 alias luck="fortune computers debian kernelcookies linux perl"
 
 source ${ZDOTDIR:-$HOME}/.zextras

@@ -4,12 +4,18 @@ transcribe() {
 	local model=${WHISPER_MODEL:-/usr/local/share/whisper/models/ggml-large-v3-turbo.bin}
 
 	local -a files wargs
-	local i=${argv[(i)--]}
+	local i=${argv[(i)--]} clean=0
 	files=("${(@)argv[1,i-1]}")
 	wargs=("${(@)argv[i+1,-1]}")
 
+	if (( ${files[(I)(-c|--clean)]} )); then
+		clean=1
+		files=("${(@)files:#(-c|--clean)}")
+	fi
+
 	if (( ! $#files )); then
-		print -u2 -r -- "usage: transcribe FILE... [-- WHISPER_ARGS]"
+		print -u2 -rl -- "usage: transcribe [OPTION]... FILE... [-- WHISPER_ARGS]" "" \
+			"  -c, --clean  strip the [START --> END] timestamp prefix from each line"
 		return 2
 	fi
 
@@ -34,6 +40,9 @@ transcribe() {
 		[[ -r $model ]] || { print -u2 -r -- "transcribe: model not found: $model"; return 1 }
 		margs=(-m "$model")
 	fi
+
+	local -a sedargs=(-e '/./,$!d')
+	(( clean )) && sedargs+=(-e 's/^\[[0-9:.]* --> [0-9:.]*\] *//')
 
 	local tmp errlog f src wav info line rc=0 n=0
 	local -A p
@@ -77,7 +86,7 @@ transcribe() {
 				wav=$tmp
 			fi
 
-			whisper-cli -np "${margs[@]}" -f "$wav" "${wargs[@]}" 2>$errlog | sed -u '/./,$!d'
+			whisper-cli -np "${margs[@]}" -f "$wav" "${wargs[@]}" 2>$errlog | sed -u "${sedargs[@]}"
 			if (( pipestatus[1] )); then
 				print -u2 -r -- "transcribe: whisper-cli failed on: $f"
 				cat -- $errlog >&2

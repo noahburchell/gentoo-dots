@@ -1,0 +1,98 @@
+#!/bin/bash
+set -euo pipefail
+
+prog=${0##*/}
+disk=/dev/disk/by-id/usb-Seagate_Expansion_HDD_00000000NT1FK8R0-0:0-part1
+stage=/home/media-stage
+mnt=/srv/media
+label=media
+opts=uid=1000,gid=1000,fmask=0133,dmask=0022
+
+die() {
+	printf '%s: %s\n' "$prog" "$*" >&2
+	exit 1
+}
+
+incompatible() {
+	find "$1" -mindepth 1 \( -type l -o -type b -o -type c -o -type p -o -type s \
+		-o -name '*[[:cntrl:]"*:<>?\\|]*' -o -name '*.' -o -name '* ' \) -print
+	find "$1" -regextype posix-extended -regex '.*/[^/]{256,}' -print
+	find "$1" -mindepth 1 -print0 | tr 'A-Z' 'a-z' | sort -z | uniq -zd | tr '\0' '\n'
+}
+
+differs() {
+	rsync -n --out-format=%n "$@" | grep -v '/$' || true
+}
+
+[ "$(id -u)" -eq 0 ] || die "must run as root"
+[ -e "$disk" ] || die "$disk: not present, is the drive plugged in"
+dev=$(readlink -f "$disk")
+[ -b "$dev" ] || die "$dev: not a block device"
+fstype=$(blkid -o value -s TYPE "$dev" || true)
+src=$(findmnt -no TARGET "$dev" || true)
+
+if [ "$fstype" = btrfs ]; then
+	if [ -z "$src" ]; then
+		mkdir -p "$mnt"
+		mount "$dev" "$mnt"
+		src=$mnt
+	fi
+
+	bad=$(incompatible "$src")
+	if [ -n "$bad" ]; then
+		printf '%s\n' "$bad" >&2
+		die "$src: $(printf '%s\n' "$bad" | wc -l) entries exfat cannot store, rename or remove them"
+	fi
+
+	mkdir -p "$stage"
+	need=$(df --output=used -B1 "$src" | tail -n1)
+	avail=$(df --output=avail -B1 "$stage" | tail -n1)
+	if [ "$need" -gt "$avail" ]; then
+		die "$stage: $avail bytes free, $src uses $need bytes"
+	fi
+
+	printf '%s: copying %s to %s\n' "$prog" "$src" "$stage"
+	rsync -aH --info=progress2 "$src"/ "$stage"/
+	left=$(differs -aH "$src"/ "$stage"/)
+	if [ -n "$left" ]; then
+		printf '%s\n' "$left" >&2
+		die "$stage: $(printf '%s\n' "$left" | wc -l) files differ from $src after the copy"
+	fi
+
+	if ! umount "$src"; then
+		fuser -vm "$src" >&2 || true
+		exit 1
+	fi
+
+	wipefs -a "$dev"
+	fstype=
+	src=
+fi
+
+[ -d "$stage" ] && [ -n "$(ls -A "$stage")" ] || die "$stage: empty, nothing to copy back"
+
+if [ -z "$fstype" ]; then
+	printf '%s: formatting %s as exfat\n' "$prog" "$dev"
+	mkfs.exfat -L "$label" "$dev"
+elif [ "$fstype" != exfat ]; then
+	die "$dev: is $fstype, expected btrfs or exfat"
+fi
+
+if [ -z "$src" ]; then
+	mkdir -p "$mnt"
+	mount -t exfat -o "$opts" "$dev" "$mnt"
+	src=$mnt
+fi
+
+printf '%s: copying %s to %s\n' "$prog" "$stage" "$src"
+rsync -rt --modify-window=1 --info=progress2 "$stage"/ "$src"/
+left=$(differs -rt --modify-window=1 "$stage"/ "$src"/)
+if [ -n "$left" ]; then
+	printf '%s\n' "$left" >&2
+	die "$src: $(printf '%s\n' "$left" | wc -l) files differ from $stage after the copy back"
+fi
+sync
+
+printf '%s: done, %s is exfat mounted at %s\n' "$prog" "$dev" "$src"
+printf '%s: %s kept, remove it with: rm -r -- %s\n' "$prog" "$stage" "$stage"
+printf '%s: mount later with: mount -t exfat -o %s %s %s\n' "$prog" "$opts" "$disk" "$mnt"

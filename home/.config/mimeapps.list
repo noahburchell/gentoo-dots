@@ -1,9 +1,15 @@
 [Added Associations]
-application/x-zerosize=org.kde.kwrite.desktop;Neovim.desktop;
+application/x-zerosize=emacs.desktop;
+image/jpeg=firefox.desktop;
+image/png=firefox.desktop;
 image/svg+xml=org.kde.gwenview.desktop;
+text/plain=emacs.desktop;
 x-scheme-handler/claude-cli=claude-code-url-handler.desktop;
 
 [Default Applications]
-application/x-zerosize=org.kde.kwrite.desktop;
+application/x-zerosize=emacs.desktop;
+image/jpeg=firefox.desktop;
+image/png=firefox.desktop;
 image/svg+xml=org.kde.gwenview.desktop;
+text/plain=emacs.desktop;
 x-scheme-handler/claude-cli=claude-code-url-handler.desktop

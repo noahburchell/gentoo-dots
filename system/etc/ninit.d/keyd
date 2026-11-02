@@ -1,0 +1,5 @@
+#!/bin/bash
+#%depon: udev
+#%type: daemon
+#%restart: always
+exec keyd

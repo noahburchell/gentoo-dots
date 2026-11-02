@@ -1,4 +1,3 @@
 #!/bin/bash
 #%depon: udev
-exec udevadm trigger --type=all --action=add \
-	--prioritized-subsystem=module,drm,input,block,tpmrm,net,tty
+exec udevadm trigger --type=all --action=add --prioritized-subsystem=module,drm,input,block,tpmrm,net,tty
